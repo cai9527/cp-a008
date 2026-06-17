@@ -9,6 +9,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { checkinService } from '@/services/checkin';
 import Calendar from '@/components/Calendar';
 import RecordItem from '@/components/RecordItem';
+import NavBar from '@/components/NavBar';
 import type { CheckinRecord } from '@/types/checkin';
 
 const filterOptions = [
@@ -151,8 +152,10 @@ const RecordsPage: React.FC = () => {
   const displayStatus = selectedDayRecord?.status || 'normal';
 
   return (
-    <ScrollView className={styles.page} scrollY>
-      <View className="pageContainer">
+    <View className={styles.page}>
+      <NavBar title="打卡记录" showBack={false} />
+      <ScrollView scrollY className={styles.scrollContent}>
+        <View className="pageContainer">
         <View className={styles.monthHeader}>
           <View className={styles.monthNav} onClick={handlePrevMonth}>‹</View>
           <Text className={styles.monthTitle}>
@@ -256,8 +259,9 @@ const RecordsPage: React.FC = () => {
             </View>
           )}
         </View>
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 

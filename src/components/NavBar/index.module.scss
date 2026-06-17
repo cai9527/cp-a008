@@ -14,23 +14,23 @@
 .navBarContent {
   display: flex;
   align-items: center;
-  height: 88rpx;
-  padding: 0 $spacing-md;
+  height: 80rpx;
+  padding: 0 $spacing-sm;
 }
 
 .navBarLeft {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 120rpx;
+  width: 100rpx;
 }
 
 .backBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64rpx;
-  height: 64rpx;
+  width: 56rpx;
+  height: 56rpx;
   border-radius: $radius-round;
   transition: background $transition-fast;
 
@@ -40,7 +40,7 @@
 }
 
 .backIcon {
-  font-size: 56rpx;
+  font-size: 48rpx;
   font-weight: $font-weight-medium;
   color: $color-text-white;
   line-height: 1;
@@ -54,14 +54,14 @@
 }
 
 .navBarTitle {
-  font-size: $font-size-lg;
+  font-size: $font-size-md;
   font-weight: $font-weight-semibold;
   color: $color-text-white;
   text-align: center;
   @include text-ellipsis;
-  max-width: 480rpx;
+  max-width: 420rpx;
 }
 
 .navBarRight {
-  width: 120rpx;
+  width: 100rpx;
 }
