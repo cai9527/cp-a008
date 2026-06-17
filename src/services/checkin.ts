@@ -9,6 +9,11 @@ export const checkinService = {
     photoUrl?: string
   ): Promise<CheckinRecord> => {
     console.log('[CheckinService] Do checkin:', type);
+
+    if (type === 'outing' && !photoUrl) {
+      throw new Error('外勤打卡必须上传现场照片');
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const now = dayjs();

@@ -43,7 +43,7 @@ const FieldCheckinPage: React.FC = () => {
     getLocation(true);
   };
 
-  const handleChooseImage = async () => {
+  const handleTakePhoto = async () => {
     if (photos.length >= 3) {
       Taro.showToast({ title: '最多上传3张照片', icon: 'none' });
       return;
@@ -53,17 +53,30 @@ const FieldCheckinPage: React.FC = () => {
       const res = await Taro.chooseImage({
         count: 3 - photos.length,
         sizeType: ['compressed'],
-        sourceType: ['album', 'camera'],
+        sourceType: ['camera'],
       });
       setPhotos([...photos, ...res.tempFilePaths]);
-      console.log('[FieldCheckin] Choose images:', res.tempFilePaths);
+      console.log('[FieldCheckin] Take photo:', res.tempFilePaths);
     } catch (err) {
-      console.error('[FieldCheckin] Choose image error:', err);
+      console.error('[FieldCheckin] Take photo error:', err);
+      if (err instanceof Error && !err.message.includes('cancel')) {
+        Taro.showToast({ title: '拍照失败，请重试', icon: 'none' });
+      }
     }
   };
 
   const handleDeletePhoto = (index: number) => {
-    setPhotos(photos.filter((_, i) => i !== index));
+    Taro.showModal({
+      title: '确认删除',
+      content: '确定要删除这张照片吗？删除后需要重新拍摄。',
+      confirmText: '删除',
+      confirmColor: '#F53F3F',
+      success: (res) => {
+        if (res.confirm) {
+          setPhotos(photos.filter((_, i) => i !== index));
+        }
+      },
+    });
   };
 
   const handleSubmit = async () => {
@@ -95,19 +108,14 @@ const FieldCheckinPage: React.FC = () => {
       return;
     }
 
-    if (!remark || remark.trim().length < 5) {
-      Taro.showToast({ title: '请填写外勤原因（至少5个字）', icon: 'none' });
+    if (photos.length === 0) {
+      Taro.showToast({ title: '请拍摄现场照片作为打卡凭证', icon: 'none' });
       return;
     }
 
-    if (photos.length === 0) {
-      const res = await Taro.showModal({
-        title: '提示',
-        content: '建议上传现场照片，是否继续提交？',
-        confirmText: '继续提交',
-        cancelText: '去上传',
-      });
-      if (!res.confirm) return;
+    if (!remark || remark.trim().length < 5) {
+      Taro.showToast({ title: '请填写外勤原因（至少5个字）', icon: 'none' });
+      return;
     }
 
     setSubmitting(true);
@@ -139,7 +147,7 @@ const FieldCheckinPage: React.FC = () => {
     }
   };
 
-  const canSubmit = isSuccess && location && remark.trim().length >= 5 && !submitting;
+  const canSubmit = isSuccess && !!location && remark.trim().length >= 5 && photos.length > 0 && !submitting;
 
   return (
     <View className={styles.page}>
@@ -148,8 +156,13 @@ const FieldCheckinPage: React.FC = () => {
         <View className={styles.tipCard}>
           <Text className={styles.tipTitle}>📋 外勤打卡说明</Text>
           <Text className={styles.tipText}>
-            外勤打卡用于外出办公场景，请如实填写外勤原因并上传现场照片。打卡记录将自动同步给管理员审核。
+            外勤打卡用于外出办公场景，需完成实时定位验证并拍摄现场照片作为打卡凭证。打卡记录将自动同步给管理员审核。
           </Text>
+          <View className={styles.tipRequirements}>
+            <Text className={styles.tipReqItem}>✓ 定位验证通过</Text>
+            <Text className={styles.tipReqItem}>✓ 拍摄现场照片（必填）</Text>
+            <Text className={styles.tipReqItem}>✓ 填写外勤原因</Text>
+          </View>
         </View>
 
         <LocationStatusCard
@@ -180,23 +193,36 @@ const FieldCheckinPage: React.FC = () => {
         </View>
 
         <View className={styles.photoSection}>
-          <Text className={styles.photoTitle}>现场照片（可选，最多3张）</Text>
+          <View className={styles.photoTitleRow}>
+            <Text className={classnames(styles.photoTitle, styles.formLabelRequired)}>
+              现场照片
+            </Text>
+            <Text className={styles.photoHint}>需现场拍摄，最多3张</Text>
+          </View>
           <View className={styles.photoGrid}>
             {photos.map((photo, index) => (
               <View key={index} className={styles.photoItem}>
-                <Image src={photo} mode="aspectFill" />
+                <Image src={photo} mode="aspectFill" className={styles.photoImage} />
+                <View className={styles.photoBadge}>
+                  <Text className={styles.photoBadgeText}>现场</Text>
+                </View>
                 <View className={styles.photoDelete} onClick={() => handleDeletePhoto(index)}>
                   ×
                 </View>
               </View>
             ))}
             {photos.length < 3 && (
-              <View className={styles.photoAdd} onClick={handleChooseImage}>
-                <Text className={styles.photoAddIcon}>+</Text>
-                <Text className={styles.photoAddText}>添加照片</Text>
+              <View className={styles.photoAdd} onClick={handleTakePhoto}>
+                <Text className={styles.photoAddIcon}>📷</Text>
+                <Text className={styles.photoAddText}>拍摄现场照片</Text>
               </View>
             )}
           </View>
+          {photos.length === 0 && (
+            <View className={styles.photoWarning}>
+              <Text className={styles.photoWarningText}>⚠️ 请拍摄现场照片，照片为外勤打卡必填凭证</Text>
+            </View>
+          )}
         </View>
       </View>
 
@@ -207,6 +233,11 @@ const FieldCheckinPage: React.FC = () => {
         >
           {submitting ? '提交中...' : isLocating ? '定位中...' : '提交外勤打卡'}
         </View>
+        {!canSubmit && !submitting && (
+          <Text className={styles.submitHint}>
+            {!isSuccess ? '请先完成定位验证' : photos.length === 0 ? '请拍摄现场照片' : remark.trim().length < 5 ? '请填写外勤原因' : ''}
+          </Text>
+        )}
       </View>
 
       {submitting && (
