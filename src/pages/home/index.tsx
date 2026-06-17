@@ -15,7 +15,7 @@ import type { CheckinRecord } from '@/types/checkin';
 const HomePage: React.FC = () => {
   const { dateStr, timeStr, weekday, now } = useClock();
   const { location, loading: locationLoading, getLocation, validateLocation } = useLocation();
-  const { userInfo, isLoggedIn } = useAuthStore();
+  const { userInfo, isLoggedIn, hasRehydrated } = useAuthStore();
   const { todayRecords, addRecord, setTodayRecords } = useCheckinStore();
 
   const [clockInStatus, setClockInStatus] = useState<'idle' | 'loading' | 'success' | 'disabled'>('idle');
@@ -53,13 +53,13 @@ const HomePage: React.FC = () => {
   }, [getLocation, setTodayRecords, now]);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (hasRehydrated && isLoggedIn) {
       loadData();
     }
-  }, [isLoggedIn, loadData]);
+  }, [isLoggedIn, hasRehydrated, loadData]);
 
   useDidShow(() => {
-    if (isLoggedIn) {
+    if (hasRehydrated && isLoggedIn) {
       loadData();
     }
   });
@@ -71,10 +71,10 @@ const HomePage: React.FC = () => {
   });
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      Taro.navigateTo({ url: '/pages/login/index' });
+    if (hasRehydrated && !isLoggedIn) {
+      Taro.redirectTo({ url: '/pages/login/index' });
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, hasRehydrated]);
 
   const handleCheckin = async (type: 'clockIn' | 'clockOut') => {
     console.log('[HomePage] Handle checkin:', type);

@@ -3,9 +3,11 @@ import { persist } from 'zustand/middleware';
 import type { AuthState, UserInfo, LoginResult } from '@/types/auth';
 
 interface AuthStore extends AuthState {
+  hasRehydrated: boolean;
   login: (result: LoginResult) => void;
   logout: () => void;
   updateUserInfo: (info: Partial<UserInfo>) => void;
+  setHasRehydrated: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -14,6 +16,7 @@ export const useAuthStore = create<AuthStore>()(
       token: null,
       userInfo: null,
       isLoggedIn: false,
+      hasRehydrated: false,
       login: (result) => {
         console.log('[Auth] Login success', result.userInfo.name);
         set({
@@ -34,9 +37,15 @@ export const useAuthStore = create<AuthStore>()(
         set((state) => ({
           userInfo: state.userInfo ? { ...state.userInfo, ...info } : null,
         })),
+      setHasRehydrated: (value) => set({ hasRehydrated: value }),
     }),
     {
       name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.hasRehydrated = true;
+        }
+      },
     }
   )
 );

@@ -9,7 +9,7 @@ import { authService } from '@/services/auth';
 import { leaveService } from '@/services/leave';
 
 const MinePage: React.FC = () => {
-  const { userInfo, isLoggedIn, logout } = useAuthStore();
+  const { userInfo, isLoggedIn, hasRehydrated, logout } = useAuthStore();
   const { stats } = useCheckinStore();
   const [leaveBalance, setLeaveBalance] = useState<any>(null);
 
@@ -24,22 +24,22 @@ const MinePage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (hasRehydrated && isLoggedIn) {
       loadData();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, hasRehydrated]);
 
   useDidShow(() => {
-    if (isLoggedIn) {
+    if (hasRehydrated && isLoggedIn) {
       loadData();
     }
   });
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      Taro.navigateTo({ url: '/pages/login/index' });
+    if (hasRehydrated && !isLoggedIn) {
+      Taro.redirectTo({ url: '/pages/login/index' });
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, hasRehydrated]);
 
   const handleLogout = () => {
     Taro.showModal({
@@ -52,8 +52,8 @@ const MinePage: React.FC = () => {
             logout();
             Taro.showToast({ title: '已退出登录', icon: 'success' });
             setTimeout(() => {
-              Taro.navigateTo({ url: '/pages/login/index' });
-            }, 500);
+              Taro.reLaunch({ url: '/pages/login/index' });
+            }, 300);
           } catch (err) {
             console.error('[MinePage] Logout error:', err);
           }

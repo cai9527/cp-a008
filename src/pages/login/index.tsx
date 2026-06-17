@@ -85,12 +85,12 @@ const LoginPage: React.FC = () => {
     try {
       const result = await authService.login(params);
       login(result);
-
-      Taro.showToast({ title: '登录成功', icon: 'success' });
-
+      
+      await Taro.showToast({ title: '登录成功', icon: 'success' });
+      
       setTimeout(() => {
-        Taro.switchTab({ url: '/pages/home/index' });
-      }, 500);
+        Taro.reLaunch({ url: '/pages/home/index' });
+      }, 300);
 
       console.log('[LoginPage] Login success');
     } catch (err) {

@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import classnames from 'classnames';
 import styles from './index.module.scss';
 import { useCheckinStore } from '@/store/useCheckinStore';
+import { useAuthStore } from '@/store/useAuthStore';
 import { checkinService } from '@/services/checkin';
 import Calendar from '@/components/Calendar';
 import RecordItem from '@/components/RecordItem';
@@ -31,6 +32,7 @@ const statusTextMap: Record<string, string> = {
 
 const RecordsPage: React.FC = () => {
   const { monthRecords, setMonthRecords, stats, setStats } = useCheckinStore();
+  const { isLoggedIn, hasRehydrated } = useAuthStore();
 
   const [currentYear, setCurrentYear] = useState(dayjs().year());
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
@@ -53,12 +55,22 @@ const RecordsPage: React.FC = () => {
   }, [setMonthRecords, setStats]);
 
   useEffect(() => {
-    loadData(currentYear, currentMonth);
-  }, [currentYear, currentMonth, loadData]);
+    if (hasRehydrated && isLoggedIn) {
+      loadData(currentYear, currentMonth);
+    }
+  }, [currentYear, currentMonth, loadData, isLoggedIn, hasRehydrated]);
 
   useDidShow(() => {
-    loadData(currentYear, currentMonth);
+    if (hasRehydrated && isLoggedIn) {
+      loadData(currentYear, currentMonth);
+    }
   });
+
+  useEffect(() => {
+    if (hasRehydrated && !isLoggedIn) {
+      Taro.redirectTo({ url: '/pages/login/index' });
+    }
+  }, [isLoggedIn, hasRehydrated]);
 
   usePullDownRefresh(async () => {
     console.log('[RecordsPage] Pull down refresh');

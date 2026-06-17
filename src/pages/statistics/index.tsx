@@ -4,11 +4,13 @@ import Taro, { useDidShow, usePullDownRefresh } from '@tarojs/taro';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
 import { useCheckinStore } from '@/store/useCheckinStore';
+import { useAuthStore } from '@/store/useAuthStore';
 import { checkinService } from '@/services/checkin';
 import StatCard from '@/components/StatCard';
 
 const StatisticsPage: React.FC = () => {
   const { stats, setStats, monthRecords, setMonthRecords } = useCheckinStore();
+  const { isLoggedIn, hasRehydrated } = useAuthStore();
 
   const [currentYear, setCurrentYear] = useState(dayjs().year());
   const [currentMonth, setCurrentMonth] = useState(dayjs().month() + 1);
@@ -29,11 +31,15 @@ const StatisticsPage: React.FC = () => {
   }, [setStats, setMonthRecords]);
 
   useEffect(() => {
-    loadData(currentYear, currentMonth);
-  }, [currentYear, currentMonth, loadData]);
+    if (hasRehydrated && isLoggedIn) {
+      loadData(currentYear, currentMonth);
+    }
+  }, [currentYear, currentMonth, loadData, isLoggedIn, hasRehydrated]);
 
   useDidShow(() => {
-    loadData(currentYear, currentMonth);
+    if (hasRehydrated && isLoggedIn) {
+      loadData(currentYear, currentMonth);
+    }
   });
 
   usePullDownRefresh(async () => {
@@ -41,6 +47,12 @@ const StatisticsPage: React.FC = () => {
     await loadData(currentYear, currentMonth);
     Taro.stopPullDownRefresh();
   });
+
+  useEffect(() => {
+    if (hasRehydrated && !isLoggedIn) {
+      Taro.redirectTo({ url: '/pages/login/index' });
+    }
+  }, [isLoggedIn, hasRehydrated]);
 
   const handlePrevMonth = () => {
     if (currentMonth === 1) {

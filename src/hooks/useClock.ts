@@ -20,7 +20,9 @@ export const useClock = () => {
     updateTime();
     const timer = setInterval(updateTime, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return {
