@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components';
 import Taro, { getCurrentPages } from '@tarojs/taro';
 import styles from './index.module.scss';
 
-interface NavBarProps {
+export interface NavBarProps {
   title: string;
   showBack?: boolean;
   onBack?: () => void;

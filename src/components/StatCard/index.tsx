@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components';
 import styles from './index.module.scss';
 import classnames from 'classnames';
 
-interface StatCardProps {
+export interface StatCardProps {
   label: string;
   value: string | number;
   unit?: string;

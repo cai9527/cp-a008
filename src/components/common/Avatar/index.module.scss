@@ -1,0 +1,54 @@
+@use '@/styles/variables.scss' as *;
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.circle {
+  border-radius: $radius-round;
+}
+
+.square {
+  border-radius: $radius-md;
+}
+
+.sm {
+  width: 64rpx;
+  height: 64rpx;
+  font-size: $font-size-sm;
+}
+
+.md {
+  width: 80rpx;
+  height: 80rpx;
+  font-size: $font-size-md;
+}
+
+.lg {
+  width: 120rpx;
+  height: 120rpx;
+  font-size: $font-size-xl;
+}
+
+.xl {
+  width: 160rpx;
+  height: 160rpx;
+  font-size: $font-size-xxl;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.text {
+  color: inherit;
+  line-height: 1;
+}

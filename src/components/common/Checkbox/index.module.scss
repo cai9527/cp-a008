@@ -1,0 +1,31 @@
+@use '@/styles/variables.scss' as *;
+
+.checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid $color-border;
+  border-radius: $radius-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+
+  &.checked {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-text-white;
+
+    &::after {
+      content: '✓';
+      font-size: 24rpx;
+      line-height: 1;
+    }
+  }
+
+  &.disabled {
+    background: $color-bg-hover;
+    border-color: $color-border-light;
+    pointer-events: none;
+  }
+}

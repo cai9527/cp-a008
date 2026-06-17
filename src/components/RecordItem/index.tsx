@@ -4,7 +4,7 @@ import styles from './index.module.scss';
 import classnames from 'classnames';
 import type { CheckinRecord } from '@/types/checkin';
 
-interface RecordItemProps {
+export interface RecordItemProps {
   record: CheckinRecord;
   onClick?: () => void;
 }

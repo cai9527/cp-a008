@@ -1,0 +1,37 @@
+@use '@/styles/variables.scss' as *;
+
+.switch {
+  width: 88rpx;
+  height: 48rpx;
+  background: $color-border;
+  border-radius: $radius-round;
+  position: relative;
+  transition: background $transition-fast;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4rpx;
+    left: 4rpx;
+    width: 40rpx;
+    height: 40rpx;
+    background: $color-bg-card;
+    border-radius: $radius-round;
+    box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+    transition: all $transition-fast;
+  }
+
+  &.checked {
+    background: $color-primary;
+
+    &::after {
+      left: 44rpx;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}

@@ -49,7 +49,6 @@ const ProfileEditPage: React.FC = () => {
     position: userInfo?.position || '',
     avatar: userInfo?.avatar || '',
   });
-  const [focusedField, setFocusedField] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -193,8 +192,6 @@ const ProfileEditPage: React.FC = () => {
               placeholder="请输入姓名"
               value={formData.name}
               onInput={(e) => handleInputChange('name', e.detail.value)}
-              onFocus={() => setFocusedField('name')}
-              onBlur={() => setFocusedField(null)}
               maxlength={20}
             />
           </View>
@@ -210,8 +207,6 @@ const ProfileEditPage: React.FC = () => {
               placeholder="请输入手机号码"
               value={formData.phone}
               onInput={(e) => handleInputChange('phone', e.detail.value)}
-              onFocus={() => setFocusedField('phone')}
-              onBlur={() => setFocusedField(null)}
               maxlength={11}
             />
           </View>

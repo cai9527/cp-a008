@@ -1,107 +1,54 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, Input } from '@tarojs/components';
+import React, { useState } from 'react';
+import { View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import classnames from 'classnames';
 import styles from './index.module.scss';
-import NavBar from '@/components/NavBar';
+import {
+  NavBar,
+  FormInput,
+  FormButton,
+  PasswordStrength,
+  Loading,
+  createValidator,
+  validateForm,
+  type ValidatorFn,
+} from '@/common';
 import { authService } from '@/services/auth';
 import { useAuthStore } from '@/store/useAuthStore';
 
-interface PasswordStrength {
-  level: number;
-  label: string;
-  color: string;
+interface FormData {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
-
-const getCharTypeCount = (password: string): number => {
-  let count = 0;
-  if (/[a-z]/.test(password)) count++;
-  if (/[A-Z]/.test(password)) count++;
-  if (/\d/.test(password)) count++;
-  if (/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(password)) count++;
-  return count;
-};
 
 const ChangePasswordPage: React.FC = () => {
   const { logout } = useAuthStore();
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [oldPasswordFocused, setOldPasswordFocused] = useState(false);
-  const [newPasswordFocused, setNewPasswordFocused] = useState(false);
-  const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
   const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-  const passwordStrength = useMemo<PasswordStrength>(() => {
-    if (!newPassword) {
-      return { level: 0, label: '', color: '' };
-    }
+  const getRules = (): Record<keyof FormData, ValidatorFn[]> => ({
+    oldPassword: [
+      createValidator.required(),
+      createValidator.minLength(6),
+    ],
+    newPassword: [
+      createValidator.required(),
+      createValidator.password(),
+      createValidator.passwordNotSame(formData.oldPassword),
+    ],
+    confirmPassword: [
+      createValidator.required(),
+      createValidator.passwordConfirm(formData.newPassword),
+    ],
+  });
 
-    let score = 0;
-    if (newPassword.length >= 8) score++;
-    if (/[a-z]/.test(newPassword)) score++;
-    if (/[A-Z]/.test(newPassword)) score++;
-    if (/\d/.test(newPassword)) score++;
-    if (/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(newPassword)) score++;
-
-    if (score <= 2) {
-      return { level: 1, label: '弱', color: 'weak' };
-    } else if (score <= 3) {
-      return { level: 2, label: '中', color: 'medium' };
-    } else {
-      return { level: 3, label: '强', color: 'strong' };
-    }
-  }, [newPassword]);
-
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!oldPassword) {
-      newErrors.oldPassword = '请输入当前密码';
-    } else if (oldPassword.length < 6) {
-      newErrors.oldPassword = '当前密码长度不能少于6位';
-    }
-
-    if (!newPassword) {
-      newErrors.newPassword = '请输入新密码';
-    } else if (newPassword.length < 8) {
-      newErrors.newPassword = '新密码长度不能少于8位';
-    } else if (newPassword.length > 20) {
-      newErrors.newPassword = '新密码长度不能超过20位';
-    } else if (/\s/.test(newPassword)) {
-      newErrors.newPassword = '新密码不能包含空格';
-    } else if (getCharTypeCount(newPassword) < 3) {
-      newErrors.newPassword = '新密码需包含大写字母、小写字母、数字、特殊字符中至少3类';
-    } else if (newPassword === oldPassword) {
-      newErrors.newPassword = '新密码不能与当前密码相同';
-    } else {
-      let similarityCount = 0;
-      for (let i = 0; i < oldPassword.length && i < newPassword.length; i++) {
-        if (oldPassword[i] === newPassword[i]) {
-          similarityCount++;
-        }
-      }
-      const similarityThreshold = Math.min(oldPassword.length, newPassword.length) * 0.6;
-      if (similarityCount > similarityThreshold) {
-        newErrors.newPassword = '新密码与当前密码过于相似，请重新设置';
-      }
-    }
-
-    if (!confirmPassword) {
-      newErrors.confirmPassword = '请再次输入新密码';
-    } else if (confirmPassword !== newPassword) {
-      newErrors.confirmPassword = '两次输入的新密码不一致';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const clearError = (field: string) => {
+  const handleChange = (field: keyof FormData) => (value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -111,18 +58,21 @@ const ChangePasswordPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    console.log('[ChangePassword] Handle submit');
-
-    if (!validateForm()) {
-      return;
+  const doValidate = (): boolean => {
+    const result = validateForm<FormData>(formData, getRules());
+    setErrors(result.errors);
+    if (!result.valid && result.firstError) {
+      Taro.showToast({ title: result.firstError, icon: 'none' });
     }
+    return result.valid;
+  };
+
+  const handleSubmit = async () => {
+    if (!doValidate()) return;
 
     setSubmitting(true);
     try {
-      await authService.updatePassword(oldPassword, newPassword);
-
-      console.log('[ChangePassword] Submit success');
+      await authService.updatePassword(formData.oldPassword, formData.newPassword);
 
       await Taro.showModal({
         title: '密码修改成功',
@@ -164,12 +114,9 @@ const ChangePasswordPage: React.FC = () => {
   };
 
   const canSubmit =
-    oldPassword.length >= 6 &&
-    newPassword.length >= 8 &&
-    newPassword.length <= 20 &&
-    !/\s/.test(newPassword) &&
-    getCharTypeCount(newPassword) >= 3 &&
-    confirmPassword.length >= 8 &&
+    formData.oldPassword.length >= 6 &&
+    formData.newPassword.length >= 8 &&
+    formData.confirmPassword.length >= 8 &&
     !submitting;
 
   return (
@@ -193,157 +140,78 @@ const ChangePasswordPage: React.FC = () => {
         </View>
 
         <View className={styles.formCard}>
-          <View className={styles.formItem}>
-            <Text className={classnames(styles.formLabel, styles.formLabelRequired)}>
-              当前密码
-            </Text>
-            <View
-              className={classnames(
-                styles.inputWrapper,
-                oldPasswordFocused && styles.focused,
-                errors.oldPassword && styles.error
-              )}
-            >
-              <Text className={styles.inputIcon}>🔒</Text>
-              <Input
-                className={styles.input}
-                password={!showOldPassword}
-                maxlength={20}
-                placeholder="请输入当前密码"
-                value={oldPassword}
-                onInput={(e) => {
-                  setOldPassword(e.detail.value);
-                  clearError('oldPassword');
-                }}
-                onFocus={() => setOldPasswordFocused(true)}
-                onBlur={() => setOldPasswordFocused(false)}
-              />
-              <Text
-                className={styles.toggleIcon}
-                onClick={() => setShowOldPassword(!showOldPassword)}
-              >
-                {showOldPassword ? '🙈' : '👁️'}
-              </Text>
-            </View>
-            {errors.oldPassword && (
-              <Text className={styles.errorText}>{errors.oldPassword}</Text>
-            )}
-          </View>
-
-          <View className={styles.formItem}>
-            <Text className={classnames(styles.formLabel, styles.formLabelRequired)}>
-              新密码
-            </Text>
-            <View
-              className={classnames(
-                styles.inputWrapper,
-                newPasswordFocused && styles.focused,
-                errors.newPassword && styles.error
-              )}
-            >
-              <Text className={styles.inputIcon}>🔑</Text>
-              <Input
-                className={styles.input}
-                password={!showNewPassword}
-                maxlength={20}
+          <FormInput
+            label="当前密码"
+            required
+            icon="🔒"
+            placeholder="请输入当前密码"
+            password
+            showToggle
+            value={formData.oldPassword}
+            onChange={handleChange('oldPassword')}
+            error={errors.oldPassword}
+            maxlength={20}
+          />
+          {formData.newPassword && (
+            <View className="mbMd">
+              <FormInput
+                label="新密码"
+                required
+                icon="🔑"
                 placeholder="请输入新密码"
-                value={newPassword}
-                onInput={(e) => {
-                  setNewPassword(e.detail.value);
-                  clearError('newPassword');
-                }}
-                onFocus={() => setNewPasswordFocused(true)}
-                onBlur={() => setNewPasswordFocused(false)}
-              />
-              <Text
-                className={styles.toggleIcon}
-                onClick={() => setShowNewPassword(!showNewPassword)}
-              >
-                {showNewPassword ? '🙈' : '👁️'}
-              </Text>
-            </View>
-            {newPassword && (
-              <View className={styles.strengthBar}>
-                <View className={styles.strengthLabel}>
-                  <Text className={styles.strengthLabelText}>密码强度：</Text>
-                  <Text className={classnames(styles.strengthValue, styles[passwordStrength.color])}>
-                    {passwordStrength.label}
-                  </Text>
-                </View>
-                <View className={styles.strengthTrack}>
-                  {[1, 2, 3].map((level) => (
-                    <View
-                      key={level}
-                      className={classnames(
-                        styles.strengthFill,
-                        level <= passwordStrength.level && styles[passwordStrength.color]
-                      )}
-                    />
-                  ))}
-                </View>
-              </View>
-            )}
-            {errors.newPassword && (
-              <Text className={styles.errorText}>{errors.newPassword}</Text>
-            )}
-          </View>
-
-          <View className={styles.formItem}>
-            <Text className={classnames(styles.formLabel, styles.formLabelRequired)}>
-              确认新密码
-            </Text>
-            <View
-              className={classnames(
-                styles.inputWrapper,
-                confirmPasswordFocused && styles.focused,
-                errors.confirmPassword && styles.error
-              )}
-            >
-              <Text className={styles.inputIcon}>✅</Text>
-              <Input
-                className={styles.input}
-                password={!showConfirmPassword}
+                password
+                showToggle
+                value={formData.newPassword}
+                onChange={handleChange('newPassword')}
+                error={errors.newPassword}
                 maxlength={20}
-                placeholder="请再次输入新密码"
-                value={confirmPassword}
-                onInput={(e) => {
-                  setConfirmPassword(e.detail.value);
-                  clearError('confirmPassword');
-                }}
-                onFocus={() => setConfirmPasswordFocused(true)}
-                onBlur={() => setConfirmPasswordFocused(false)}
               />
-              <Text
-                className={styles.toggleIcon}
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? '🙈' : '👁️'}
-              </Text>
+              <PasswordStrength password={formData.newPassword} />
             </View>
-            {errors.confirmPassword && (
-              <Text className={styles.errorText}>{errors.confirmPassword}</Text>
-            )}
-          </View>
+          )}
+          {!formData.newPassword && (
+            <FormInput
+              label="新密码"
+              required
+              icon="🔑"
+              placeholder="请输入新密码"
+              password
+              showToggle
+              value={formData.newPassword}
+              onChange={handleChange('newPassword')}
+              error={errors.newPassword}
+              maxlength={20}
+            />
+          )}
+          <FormInput
+            label="确认新密码"
+            required
+            icon="✅"
+            placeholder="请再次输入新密码"
+            password
+            showToggle
+            value={formData.confirmPassword}
+            onChange={handleChange('confirmPassword')}
+            error={errors.confirmPassword}
+            maxlength={20}
+          />
         </View>
       </View>
 
       <View className={styles.submitBar}>
-        <View
-          className={classnames(styles.submitBtn, (!canSubmit || submitting) && styles.disabled)}
-          onClick={canSubmit && !submitting ? handleSubmit : undefined}
+        <FormButton
+          type="primary"
+          size="md"
+          disabled={!canSubmit}
+          loading={submitting}
+          loadingText="提交中..."
+          onClick={handleSubmit}
         >
-          {submitting ? '提交中...' : '确认修改'}
-        </View>
+          确认修改
+        </FormButton>
       </View>
 
-      {submitting && (
-        <View className={styles.loadingOverlay}>
-          <View className={styles.loadingContent}>
-            <View className={styles.spinner} />
-            <Text className={styles.loadingText}>正在修改密码...</Text>
-          </View>
-        </View>
-      )}
+      <Loading visible={submitting} text="正在修改密码..." />
     </View>
   );
 };

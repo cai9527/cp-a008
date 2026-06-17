@@ -1,0 +1,49 @@
+@use '@/styles/variables.scss' as *;
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  &.transparent {
+    background: transparent;
+  }
+}
+
+.content {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xxl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 240rpx;
+}
+
+.spinner {
+  width: 64rpx;
+  height: 64rpx;
+  border: 6rpx solid $color-border;
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: $spacing-md;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}

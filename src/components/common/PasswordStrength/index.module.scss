@@ -1,0 +1,58 @@
+@use '@/styles/variables.scss' as *;
+
+.strengthBar {
+  margin-top: $spacing-sm;
+}
+
+.strengthLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.strengthLabelText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.strengthValue {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+
+  &.weak {
+    color: $color-error;
+  }
+
+  &.medium {
+    color: $color-warning;
+  }
+
+  &.strong {
+    color: $color-success;
+  }
+}
+
+.strengthTrack {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.strengthFill {
+  flex: 1;
+  height: 8rpx;
+  background: $color-border;
+  border-radius: $radius-round;
+  transition: all $transition-fast;
+
+  &.weak {
+    background: $color-error;
+  }
+
+  &.medium {
+    background: $color-warning;
+  }
+
+  &.strong {
+    background: $color-success;
+  }
+}

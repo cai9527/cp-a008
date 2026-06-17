@@ -1,0 +1,240 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+.pageContainer {
+  padding: 0 $page-padding;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.pageWithNavBar {
+  padding-top: 100rpx;
+  padding-bottom: 200rpx;
+}
+
+.pageContent {
+  padding: $spacing-lg $page-padding;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexCenter {
+  @include flex-center;
+}
+
+.flexBetween {
+  @include flex-between;
+}
+
+.flexAlignCenter {
+  @include flex-align-center;
+}
+
+.flexJustifyCenter {
+  @include flex-justify-center;
+}
+
+.flexWrap {
+  flex-wrap: wrap;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.flexGrow {
+  flex-grow: 1;
+}
+
+.flexShrink0 {
+  flex-shrink: 0;
+}
+
+.textEllipsis {
+  @include text-ellipsis;
+}
+
+.textEllipsis2 {
+  @include text-ellipsis-multi(2);
+}
+
+.textEllipsis3 {
+  @include text-ellipsis-multi(3);
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.textPrimary {
+  color: $color-primary;
+}
+
+.textSuccess {
+  color: $color-success;
+}
+
+.textWarning {
+  color: $color-warning;
+}
+
+.textError {
+  color: $color-error;
+}
+
+.textSecondary {
+  color: $color-text-secondary;
+}
+
+.textTertiary {
+  color: $color-text-tertiary;
+}
+
+.textWhite {
+  color: $color-text-white;
+}
+
+.textDisabled {
+  color: $color-text-disabled;
+}
+
+.fontBold {
+  font-weight: $font-weight-bold;
+}
+
+.fontSemibold {
+  font-weight: $font-weight-semibold;
+}
+
+.fontMedium {
+  font-weight: $font-weight-medium;
+}
+
+.fontNormal {
+  font-weight: $font-weight-normal;
+}
+
+.fontSizeXs { font-size: $font-size-xs; }
+.fontSizeSm { font-size: $font-size-sm; }
+.fontSizeMd { font-size: $font-size-md; }
+.fontSizeLg { font-size: $font-size-lg; }
+.fontSizeXl { font-size: $font-size-xl; }
+.fontSizeXxl { font-size: $font-size-xxl; }
+
+.mtXs { margin-top: $spacing-xs; }
+.mtSm { margin-top: $spacing-sm; }
+.mtMd { margin-top: $spacing-md; }
+.mtLg { margin-top: $spacing-lg; }
+.mtXl { margin-top: $spacing-xl; }
+.mtXxl { margin-top: $spacing-xxl; }
+
+.mbXs { margin-bottom: $spacing-xs; }
+.mbSm { margin-bottom: $spacing-sm; }
+.mbMd { margin-bottom: $spacing-md; }
+.mbLg { margin-bottom: $spacing-lg; }
+.mbXl { margin-bottom: $spacing-xl; }
+.mbXxl { margin-bottom: $spacing-xxl; }
+
+.mlXs { margin-left: $spacing-xs; }
+.mlSm { margin-left: $spacing-sm; }
+.mlMd { margin-left: $spacing-md; }
+.mlLg { margin-left: $spacing-lg; }
+.mlXl { margin-left: $spacing-xl; }
+
+.mrXs { margin-right: $spacing-xs; }
+.mrSm { margin-right: $spacing-sm; }
+.mrMd { margin-right: $spacing-md; }
+.mrLg { margin-right: $spacing-lg; }
+.mrXl { margin-right: $spacing-xl; }
+
+.mxAuto { margin-left: auto; margin-right: auto; }
+
+.pXs { padding: $spacing-xs; }
+.pSm { padding: $spacing-sm; }
+.pMd { padding: $spacing-md; }
+.pLg { padding: $spacing-lg; }
+.pXl { padding: $spacing-xl; }
+.pXxl { padding: $spacing-xxl; }
+
+.pxMd { padding-left: $spacing-md; padding-right: $spacing-md; }
+.pyMd { padding-top: $spacing-md; padding-bottom: $spacing-md; }
+
+.wFull { width: 100%; }
+.hFull { height: 100%; }
+.minHFlex { min-height: 100vh; display: flex; flex-direction: column; }
+
+.bgPrimary { background: $color-primary; }
+.bgSuccess { background: $color-success; }
+.bgWarning { background: $color-warning; }
+.bgError { background: $color-error; }
+.bgWhite { background: $color-bg-card; }
+.bgPage { background: $color-bg-page; }
+.bgHover { background: $color-bg-hover; }
+.bgTag { background: $color-bg-tag; }
+
+.roundedXs { border-radius: $radius-xs; }
+.roundedSm { border-radius: $radius-sm; }
+.roundedMd { border-radius: $radius-md; }
+.roundedLg { border-radius: $radius-lg; }
+.roundedXl { border-radius: $radius-xl; }
+.roundedButton { border-radius: $radius-button; }
+.roundedFull { border-radius: $radius-round; }
+
+.shadowCard { box-shadow: $shadow-card; }
+.shadowFloat { box-shadow: $shadow-float; }
+.shadowPopup { box-shadow: $shadow-popup; }
+
+.overflowHidden { overflow: hidden; }
+.overflowAuto { overflow: auto; }
+.overflowScroll { overflow: scroll; }
+
+.positionRelative { position: relative; }
+.positionAbsolute { position: absolute; }
+.positionFixed { position: fixed; }
+
+.cursorPointer { cursor: pointer; }
+
+.border {
+  border: 2rpx solid $color-border;
+}
+
+.borderTop {
+  border-top: 2rpx solid $color-border-light;
+}
+
+.borderBottom {
+  border-bottom: 2rpx solid $color-border-light;
+}
+
+.opacity0 { opacity: 0; }
+.opacity50 { opacity: 0.5; }
+.opacity100 { opacity: 1; }
+
+.gapXs { gap: $spacing-xs; }
+.gapSm { gap: $spacing-sm; }
+.gapMd { gap: $spacing-md; }
+.gapLg { gap: $spacing-lg; }
+
+.safeAreaBottom {
+  @include safe-area-bottom;
+}
+
+.clickable {
+  @include clickable;
+}

@@ -1,0 +1,636 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+.card {
+  @include card-base;
+}
+
+.cardXl {
+  @include card-xl;
+}
+
+.tipCard {
+  display: flex;
+  background: linear-gradient(135deg, rgba(22, 119, 255, 0.08) 0%, rgba(64, 150, 255, 0.08) 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  border: 2rpx solid rgba(22, 119, 255, 0.15);
+}
+
+.tipCardIcon {
+  font-size: 48rpx;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.tipCardContent {
+  flex: 1;
+}
+
+.tipCardTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.tipCardText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.tipCardList {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.tipCardListItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  line-height: 1.6;
+}
+
+.section {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-lg;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 2rpx solid $color-divider;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionBody {
+  padding: $spacing-lg;
+}
+
+.formCard {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl $spacing-xl $spacing-sm;
+  box-shadow: $shadow-card;
+}
+
+.formGroup {
+  margin-bottom: $spacing-lg;
+}
+
+.formItem {
+  margin-bottom: $spacing-lg;
+}
+
+.formLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.formLabelRequired {
+  &::before {
+    content: '*';
+    color: $color-error;
+    margin-right: 4rpx;
+  }
+}
+
+.formInputWrapper {
+  display: flex;
+  align-items: center;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-lg;
+  border: 2rpx solid transparent;
+  transition: all $transition-fast;
+
+  &.focused {
+    border-color: $color-primary;
+    background: $color-bg-card;
+  }
+
+  &.error {
+    border-color: $color-error;
+    background: rgba(245, 63, 63, 0.04);
+  }
+
+  &.disabled {
+    background: $color-bg-hover;
+    color: $color-text-disabled;
+  }
+}
+
+.formInputIcon {
+  font-size: $font-size-lg;
+  margin-right: $spacing-md;
+  color: $color-text-tertiary;
+}
+
+.formInput {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: 1.5;
+  background: transparent;
+}
+
+.formToggleIcon {
+  font-size: $font-size-lg;
+  margin-left: $spacing-md;
+  padding: $spacing-xs;
+}
+
+.formErrorText {
+  display: block;
+  font-size: $font-size-xs;
+  color: $color-error;
+  margin-top: $spacing-xs;
+  line-height: 1.4;
+}
+
+.formValue {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.formReadOnly {
+  color: $color-text-tertiary;
+}
+
+.formArrow {
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.formTextarea {
+  width: 100%;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: 1.6;
+  min-height: 200rpx;
+  box-sizing: border-box;
+  border: 2rpx solid transparent;
+  transition: all $transition-fast;
+
+  &.focused {
+    border-color: $color-primary;
+    background: $color-bg-card;
+  }
+
+  &.error {
+    border-color: $color-error;
+  }
+}
+
+.btn {
+  @include button-reset;
+  width: 100%;
+  height: $button-height-md;
+  background: $color-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  transition: all $transition-fast;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &.disabled,
+  &[disabled] {
+    background: $color-text-disabled;
+    pointer-events: none;
+  }
+}
+
+.btnPrimary {
+  @include bg-gradient-primary;
+}
+
+.btnSuccess {
+  background: $color-success;
+}
+
+.btnWarning {
+  background: $color-warning;
+}
+
+.btnError {
+  background: $color-error;
+}
+
+.btnOutline {
+  background: transparent;
+  border: 2rpx solid $color-primary;
+  color: $color-primary;
+}
+
+.btnGhost {
+  background: transparent;
+  color: $color-primary;
+}
+
+.btnSm {
+  height: $button-height-sm;
+  font-size: $font-size-sm;
+  width: auto;
+  padding: 0 $spacing-lg;
+}
+
+.btnLg {
+  height: $button-height-lg;
+  font-size: $font-size-lg;
+}
+
+.btnInline {
+  display: inline-flex;
+  width: auto;
+  padding: 0 $spacing-xl;
+}
+
+.submitBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding;
+  padding-bottom: calc(#{$spacing-lg} + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+  z-index: $z-index-popup;
+}
+
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-loading;
+}
+
+.loadingContent {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xxl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 240rpx;
+}
+
+.spinner {
+  width: 64rpx;
+  height: 64rpx;
+  border: 6rpx solid $color-border;
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: $spacing-md;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl 0;
+}
+
+.emptyIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-md;
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  line-height: 1.4;
+}
+
+.tagPrimary {
+  background: rgba(22, 119, 255, 0.1);
+  color: $color-primary;
+}
+
+.tagSuccess {
+  background: rgba(0, 180, 42, 0.1);
+  color: $color-success;
+}
+
+.tagWarning {
+  background: rgba(255, 125, 0, 0.1);
+  color: $color-warning;
+}
+
+.tagError {
+  background: rgba(245, 63, 63, 0.1);
+  color: $color-error;
+}
+
+.tagPurple {
+  background: rgba(114, 46, 209, 0.1);
+  color: $color-purple;
+}
+
+.tagDefault {
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+}
+
+.tagRound {
+  border-radius: $radius-round;
+}
+
+.tagSm {
+  font-size: 20rpx;
+  padding: 2rpx $spacing-xs;
+}
+
+.tagMd {
+  font-size: $font-size-sm;
+  padding: $spacing-xs $spacing-sm;
+}
+
+.strengthBar {
+  margin-top: $spacing-sm;
+}
+
+.strengthLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.strengthLabelText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.strengthValue {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+
+  &.weak {
+    color: $color-error;
+  }
+
+  &.medium {
+    color: $color-warning;
+  }
+
+  &.strong {
+    color: $color-success;
+  }
+}
+
+.strengthTrack {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.strengthFill {
+  flex: 1;
+  height: 8rpx;
+  background: $color-border;
+  border-radius: $radius-round;
+  transition: all $transition-fast;
+
+  &.weak {
+    background: $color-error;
+  }
+
+  &.medium {
+    background: $color-warning;
+  }
+
+  &.strong {
+    background: $color-success;
+  }
+}
+
+.divider {
+  height: 2rpx;
+  background: $color-divider;
+  margin: $spacing-md 0;
+}
+
+.dividerVertical {
+  width: 2rpx;
+  background: $color-divider;
+  margin: 0 $spacing-md;
+}
+
+.dividerDashed {
+  height: 2rpx;
+  background: repeating-linear-gradient(
+    to right,
+    $color-divider 0,
+    $color-divider 10rpx,
+    transparent 10rpx,
+    transparent 20rpx
+  );
+  margin: $spacing-md 0;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatarSm {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+}
+
+.avatarMd {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-round;
+  font-size: $font-size-md;
+}
+
+.avatarLg {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-round;
+  font-size: $font-size-xl;
+}
+
+.avatarXl {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-round;
+  font-size: $font-size-xxl;
+}
+
+.badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  background: $color-error;
+  border-radius: $radius-round;
+  font-size: 20rpx;
+  color: $color-text-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: $color-bg-card;
+  transition: background $transition-fast;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.listItemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.listItemTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.listItemDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.listItemArrow {
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+  margin-left: $spacing-sm;
+}
+
+.checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid $color-border;
+  border-radius: $radius-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+
+  &.checked {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-text-white;
+
+    &::after {
+      content: '✓';
+      font-size: 24rpx;
+      line-height: 1;
+    }
+  }
+
+  &.disabled {
+    background: $color-bg-hover;
+    border-color: $color-border-light;
+  }
+}
+
+.switch {
+  width: 88rpx;
+  height: 48rpx;
+  background: $color-border;
+  border-radius: $radius-round;
+  position: relative;
+  transition: background $transition-fast;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4rpx;
+    left: 4rpx;
+    width: 40rpx;
+    height: 40rpx;
+    background: $color-bg-card;
+    border-radius: $radius-round;
+    box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+    transition: all $transition-fast;
+  }
+
+  &.checked {
+    background: $color-primary;
+
+    &::after {
+      left: 44rpx;
+    }
+  }
+}
