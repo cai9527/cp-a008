@@ -11,6 +11,15 @@ const mockUserInfo: UserInfo = {
   avatar: 'https://picsum.photos/id/1005/200/200',
 };
 
+const getCharTypeCount = (password: string): number => {
+  let count = 0;
+  if (/[a-z]/.test(password)) count++;
+  if (/[A-Z]/.test(password)) count++;
+  if (/\d/.test(password)) count++;
+  if (/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(password)) count++;
+  return count;
+};
+
 export const authService = {
   login: async (params: LoginParams): Promise<LoginResult> => {
     console.log('[AuthService] Login request:', params.phone, params.loginType);
@@ -81,6 +90,9 @@ export const authService = {
     }
     if (!/\d/.test(newPassword)) {
       throw new Error('新密码必须包含数字');
+    }
+    if (getCharTypeCount(newPassword) < 3) {
+      throw new Error('新密码需包含大写字母、小写字母、数字、特殊字符中至少3类');
     }
     if (newPassword === oldPassword) {
       throw new Error('新密码不能与当前密码相同');

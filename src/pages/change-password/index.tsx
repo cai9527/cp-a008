@@ -13,6 +13,15 @@ interface PasswordStrength {
   color: string;
 }
 
+const getCharTypeCount = (password: string): number => {
+  let count = 0;
+  if (/[a-z]/.test(password)) count++;
+  if (/[A-Z]/.test(password)) count++;
+  if (/\d/.test(password)) count++;
+  if (/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(password)) count++;
+  return count;
+};
+
 const ChangePasswordPage: React.FC = () => {
   const { logout } = useAuthStore();
   const [oldPassword, setOldPassword] = useState('');
@@ -65,8 +74,8 @@ const ChangePasswordPage: React.FC = () => {
       newErrors.newPassword = '新密码长度不能超过20位';
     } else if (/\s/.test(newPassword)) {
       newErrors.newPassword = '新密码不能包含空格';
-    } else if (!/[a-zA-Z]/.test(newPassword) || !/\d/.test(newPassword)) {
-      newErrors.newPassword = '新密码需包含字母和数字';
+    } else if (getCharTypeCount(newPassword) < 3) {
+      newErrors.newPassword = '新密码需包含大写字母、小写字母、数字、特殊字符中至少3类';
     } else if (newPassword === oldPassword) {
       newErrors.newPassword = '新密码不能与当前密码相同';
     } else {
@@ -131,7 +140,16 @@ const ChangePasswordPage: React.FC = () => {
         message = err.message;
         if (message.includes('当前密码')) {
           setErrors({ oldPassword: message });
-        } else if (message.includes('新密码') || message.includes('长度') || message.includes('字母') || message.includes('数字')) {
+        } else if (
+          message.includes('新密码') ||
+          message.includes('长度') ||
+          message.includes('空格') ||
+          message.includes('字母') ||
+          message.includes('数字') ||
+          message.includes('特殊字符') ||
+          message.includes('相似') ||
+          message.includes('强度')
+        ) {
           setErrors({ newPassword: message });
         }
       }
@@ -150,8 +168,7 @@ const ChangePasswordPage: React.FC = () => {
     newPassword.length >= 8 &&
     newPassword.length <= 20 &&
     !/\s/.test(newPassword) &&
-    /[a-zA-Z]/.test(newPassword) &&
-    /\d/.test(newPassword) &&
+    getCharTypeCount(newPassword) >= 3 &&
     confirmPassword.length >= 8 &&
     !submitting;
 
@@ -167,9 +184,10 @@ const ChangePasswordPage: React.FC = () => {
               为了您的账户安全，密码需满足以下要求：
             </Text>
             <View className={styles.tipList}>
-              <Text className={styles.tipListItem}>· 长度不少于 8 位</Text>
-              <Text className={styles.tipListItem}>· 包含字母和数字</Text>
-              <Text className={styles.tipListItem}>· 建议包含大小写字母和特殊字符</Text>
+              <Text className={styles.tipListItem}>· 长度不少于 8 位，不超过 20 位</Text>
+              <Text className={styles.tipListItem}>· 不能包含空格</Text>
+              <Text className={styles.tipListItem}>· 需包含以下 4 类字符中至少 3 类：</Text>
+              <Text className={styles.tipListItem}>　 大写字母 (A-Z)、小写字母 (a-z)、数字 (0-9)、特殊字符 (!@#$%^&amp;* 等)</Text>
             </View>
           </View>
         </View>
