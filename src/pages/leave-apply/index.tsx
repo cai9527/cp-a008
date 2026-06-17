@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import styles from './index.module.scss';
 import { leaveService } from '@/services/leave';
 import { leaveTypeOptions, type LeaveType } from '@/types/leave';
+import NavBar from '@/components/NavBar';
 
 const LeaveApplyPage: React.FC = () => {
   const [leaveType, setLeaveType] = useState<LeaveType>('annual');
@@ -144,6 +145,7 @@ const LeaveApplyPage: React.FC = () => {
 
   return (
     <View className={styles.page}>
+      <NavBar title="请假申请" />
       <View className="pageContainer">
         <View className={styles.tipCard}>
           <Text className={styles.tipTitle}>📋 请假说明</Text>

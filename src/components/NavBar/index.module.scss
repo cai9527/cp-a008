@@ -1,0 +1,67 @@
+@use '@/styles/variables.scss' as *;
+
+.navBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999;
+  background: $color-primary;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.navBarContent {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 $spacing-md;
+}
+
+.navBarLeft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 120rpx;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  transition: background $transition-fast;
+
+  &:active {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.backIcon {
+  font-size: 56rpx;
+  font-weight: $font-weight-medium;
+  color: $color-text-white;
+  line-height: 1;
+}
+
+.navBarCenter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navBarTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  text-align: center;
+  @include text-ellipsis;
+  max-width: 480rpx;
+}
+
+.navBarRight {
+  width: 120rpx;
+}

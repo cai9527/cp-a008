@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import styles from './index.module.scss';
 import { leaveService } from '@/services/leave';
 import type { LeaveRecord } from '@/types/leave';
+import NavBar from '@/components/NavBar';
 
 const filterOptions = [
   { key: 'all', label: '全部' },
@@ -94,8 +95,10 @@ const LeaveRecordsPage: React.FC = () => {
   }, [records, activeFilter]);
 
   return (
-    <ScrollView className={styles.page} scrollY>
-      <View className={styles.filterTabs}>
+    <View className={styles.page}>
+      <NavBar title="请假记录" />
+      <ScrollView scrollY className={styles.scrollContent}>
+        <View className={styles.filterTabs}>
         {filterOptions.map((option) => (
           <View
             key={option.key}
@@ -203,7 +206,8 @@ const LeaveRecordsPage: React.FC = () => {
           <View className={styles.loadingMore}>加载中...</View>
         )}
       </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

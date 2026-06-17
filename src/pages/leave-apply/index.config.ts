@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: '请假申请',
+  navigationStyle: 'custom',
 });

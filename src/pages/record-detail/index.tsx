@@ -7,6 +7,7 @@ import styles from './index.module.scss';
 import { checkinService } from '@/services/checkin';
 import { useCheckinStore } from '@/store/useCheckinStore';
 import type { CheckinRecord } from '@/types/checkin';
+import NavBar from '@/components/NavBar';
 
 const statusTextMap: Record<string, string> = {
   success: '正常',
@@ -140,6 +141,7 @@ const RecordDetailPage: React.FC = () => {
 
   return (
     <View className={styles.page}>
+      <NavBar title="打卡详情" />
       <View className={styles.statusHeader}>
         <View className={classnames(styles.statusBadge, styles[record.status])}>
           {statusTextMap[record.status]}

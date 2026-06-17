@@ -6,6 +6,7 @@ import styles from './index.module.scss';
 import { useLocation } from '@/hooks/useLocation';
 import { useCheckinStore } from '@/store/useCheckinStore';
 import { checkinService } from '@/services/checkin';
+import NavBar from '@/components/NavBar';
 
 const FieldCheckinPage: React.FC = () => {
   const { location, loading: locationLoading, getLocation } = useLocation();
@@ -109,6 +110,7 @@ const FieldCheckinPage: React.FC = () => {
 
   return (
     <View className={styles.page}>
+      <NavBar title="外勤打卡" />
       <View className="pageContainer">
         <View className={styles.tipCard}>
           <Text className={styles.tipTitle}>📋 外勤打卡说明</Text>

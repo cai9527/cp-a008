@@ -4,6 +4,12 @@
   min-height: 100vh;
 }
 
+.scrollContent {
+  height: 100vh;
+  padding-top: 180rpx;
+  box-sizing: border-box;
+}
+
 .filterTabs {
   display: flex;
   background: $color-bg-card;
