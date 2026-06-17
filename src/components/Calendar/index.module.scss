@@ -1,0 +1,89 @@
+@use '@/styles/variables.scss' as *;
+
+.calendar {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.weekHeader {
+  display: flex;
+  margin-bottom: $spacing-md;
+}
+
+.weekDay {
+  flex: 1;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm 0;
+}
+
+.weekend {
+  color: $color-error;
+}
+
+.daysGrid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dayCell {
+  width: calc(100% / 7);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all $transition-fast;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.otherMonth {
+  opacity: 0.3;
+}
+
+.today {
+  background: $color-bg-tag;
+  border-radius: $radius-md;
+}
+
+.selected {
+  background: $color-primary;
+  border-radius: $radius-md;
+}
+
+.weekendCell {
+  .dayText {
+    color: $color-error;
+  }
+}
+
+.dayText {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-normal;
+}
+
+.selectedText {
+  color: $color-text-white !important;
+  font-weight: $font-weight-semibold;
+}
+
+.todayText {
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.statusDot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  margin-top: 4rpx;
+}

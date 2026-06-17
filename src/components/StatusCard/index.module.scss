@@ -1,0 +1,68 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  flex: 1;
+  min-width: 0;
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.icon {
+  font-size: $font-size-lg;
+  margin-right: $spacing-xs;
+}
+
+.title {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.valueWrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.value {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+.unit {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-left: $spacing-xs;
+}
+
+.colorPrimary {
+  .value { color: $color-primary; }
+}
+
+.colorSuccess {
+  .value { color: $color-success; }
+}
+
+.colorWarning {
+  .value { color: $color-warning; }
+}
+
+.colorError {
+  .value { color: $color-error; }
+}
+
+.colorPurple {
+  .value { color: $color-purple; }
+}

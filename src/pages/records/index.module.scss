@@ -1,0 +1,233 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding-bottom: $spacing-xl;
+}
+
+.monthHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+  margin-bottom: $spacing-md;
+}
+
+.monthNav {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  box-shadow: $shadow-card;
+  font-size: $font-size-lg;
+  transition: all $transition-fast;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.monthTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.todayBtn {
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-tag;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  overflow-x: auto;
+  padding-bottom: $spacing-sm;
+  @include scroll-x-container;
+}
+
+.statItem {
+  @include scroll-x-item(160rpx);
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+  text-align: center;
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.statValue {
+  display: block;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  display: block;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.success {
+  .statValue { color: $color-success; }
+}
+
+.warning {
+  .statValue { color: $color-warning; }
+}
+
+.error {
+  .statValue { color: $color-error; }
+}
+
+.primary {
+  .statValue { color: $color-primary; }
+}
+
+.calendarSection {
+  margin-bottom: $spacing-lg;
+}
+
+.filterTabs {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  overflow-x: auto;
+  padding-bottom: $spacing-xs;
+  @include scroll-x-container;
+}
+
+.filterTab {
+  @include scroll-x-item(auto);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  white-space: nowrap;
+  box-shadow: $shadow-card;
+  transition: all $transition-fast;
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.selectedDateInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.selectedDate {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.selectedStatus {
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  &.normal {
+    background: rgba(0, 180, 42, 0.1);
+    color: $color-success;
+  }
+
+  &.late, &.early {
+    background: rgba(255, 125, 0, 0.1);
+    color: $color-warning;
+  }
+
+  &.absent {
+    background: rgba(245, 63, 63, 0.1);
+    color: $color-error;
+  }
+
+  &.leave {
+    background: rgba(22, 119, 255, 0.1);
+    color: $color-primary;
+  }
+
+  &.outing {
+    background: rgba(114, 46, 209, 0.1);
+    color: $color-purple;
+  }
+
+  &.weekend {
+    background: $color-bg-page;
+    color: $color-text-tertiary;
+  }
+}
+
+.recordsList {
+  margin-bottom: $spacing-lg;
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xxl 0;
+}
+
+.emptyIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-md;
+  opacity: 0.3;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.statusLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.legendDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: $spacing-xs;
+}

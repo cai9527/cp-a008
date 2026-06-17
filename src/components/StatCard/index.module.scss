@@ -1,0 +1,85 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  transition: all $transition-fast;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.label {
+  display: block;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+}
+
+.valueRow {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: $spacing-md;
+}
+
+.value {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  display: flex;
+  align-items: baseline;
+}
+
+.unit {
+  font-size: $font-size-sm;
+  color: inherit;
+  margin-left: $spacing-xs;
+  font-weight: $font-weight-medium;
+}
+
+.subValue {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-left: $spacing-sm;
+}
+
+.progressBar {
+  height: 12rpx;
+  background: $color-bg-page;
+  border-radius: $radius-round;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: $radius-round;
+  transition: width $transition-base;
+}
+
+.primary {
+  .value { color: $color-primary; }
+  .progressFill { background: $color-primary; }
+}
+
+.success {
+  .value { color: $color-success; }
+  .progressFill { background: $color-success; }
+}
+
+.warning {
+  .value { color: $color-warning; }
+  .progressFill { background: $color-warning; }
+}
+
+.error {
+  .value { color: $color-error; }
+  .progressFill { background: $color-error; }
+}
+
+.purple {
+  .value { color: $color-purple; }
+  .progressFill { background: $color-purple; }
+}

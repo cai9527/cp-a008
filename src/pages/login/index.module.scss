@@ -1,0 +1,217 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, $color-primary 0%, $color-primary-light 40%, $color-bg-page 40%);
+}
+
+.header {
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl $page-padding;
+}
+
+.logo {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-lg;
+  background: $color-bg-card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60rpx;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-float;
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.loginCard {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  margin: 0 $page-padding;
+  padding: $spacing-xxl $spacing-xl;
+  box-shadow: $shadow-float;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: $spacing-xxl;
+  border-bottom: 2rpx solid $color-border;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-md 0;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+  position: relative;
+  transition: all $transition-fast;
+
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2rpx;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80rpx;
+      height: 6rpx;
+      background: $color-primary;
+      border-radius: $radius-round;
+    }
+  }
+}
+
+.formGroup {
+  margin-bottom: $spacing-lg;
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid $color-border;
+  padding: $spacing-sm 0;
+  transition: all $transition-fast;
+
+  &.focused {
+    border-color: $color-primary;
+  }
+}
+
+.inputIcon {
+  font-size: $font-size-lg;
+  margin-right: $spacing-md;
+  color: $color-text-tertiary;
+}
+
+.input {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: 1.5;
+}
+
+.codeInputWrapper {
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid $color-border;
+  padding: $spacing-sm 0;
+
+  &.focused {
+    border-color: $color-primary;
+  }
+}
+
+.codeBtn {
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+  transition: all $transition-fast;
+
+  &:active {
+    opacity: 0.7;
+  }
+
+  &.disabled {
+    color: $color-text-disabled;
+  }
+}
+
+.loginBtn {
+  @include button-reset;
+  width: 100%;
+  height: $button-height-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  margin-top: $spacing-xl;
+  transition: all $transition-fast;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &.disabled {
+    background: $color-text-disabled;
+  }
+}
+
+.footer {
+  margin-top: $spacing-xl;
+  text-align: center;
+}
+
+.footerLink {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.agreement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: $spacing-lg;
+}
+
+.checkbox {
+  width: 32rpx;
+  height: 32rpx;
+  border: 2rpx solid $color-border;
+  border-radius: $radius-xs;
+  margin-right: $spacing-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-fast;
+
+  &.checked {
+    background: $color-primary;
+    border-color: $color-primary;
+
+    &::after {
+      content: '✓';
+      color: $color-text-white;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.agreementText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.agreementLink {
+  color: $color-primary;
+}

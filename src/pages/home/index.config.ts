@@ -1,0 +1,5 @@
+export default definePageConfig({
+  navigationBarTitleText: '考勤打卡',
+  enablePullDownRefresh: true,
+  backgroundTextStyle: 'dark',
+});
