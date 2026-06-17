@@ -71,7 +71,7 @@ const MinePage: React.FC = () => {
   };
 
   const handleGoSettings = () => {
-    Taro.showToast({ title: '设置功能开发中', icon: 'none' });
+    Taro.navigateTo({ url: '/pages/settings/index' });
   };
 
   const handleGoHelp = () => {
@@ -129,7 +129,10 @@ const MinePage: React.FC = () => {
     <ScrollView className={styles.page} scrollY>
       <View className="pageContainer">
         <View className={styles.header}>
-          <View className={styles.userInfo}>
+          <View
+            className={styles.userInfo}
+            onClick={() => Taro.navigateTo({ url: '/pages/profile-edit/index' })}
+          >
             <View className={styles.avatar}>
               {userInfo?.avatar ? (
                 <Image src={userInfo.avatar} mode="aspectFill" />
@@ -144,6 +147,7 @@ const MinePage: React.FC = () => {
               </Text>
               <Text className={styles.userNo}>工号：{userInfo?.employeeNo}</Text>
             </View>
+            <Text className={styles.headerArrow}>›</Text>
           </View>
 
           <View className={styles.statsSummary}>

@@ -17,6 +17,13 @@
   align-items: center;
 }
 
+.headerArrow {
+  font-size: $font-size-xl;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: $spacing-md;
+  flex-shrink: 0;
+}
+
 .avatar {
   width: 120rpx;
   height: 120rpx;

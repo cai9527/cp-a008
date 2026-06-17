@@ -1,0 +1,103 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-top: 150rpx;
+  padding-bottom: $spacing-xl;
+}
+
+.section {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  padding: $spacing-md $spacing-lg $spacing-xs;
+  font-weight: $font-weight-medium;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  border-bottom: 2rpx solid $color-divider;
+  transition: all $transition-fast;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.menuIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-xl;
+  margin-right: $spacing-lg;
+  flex-shrink: 0;
+
+  &.blue {
+    background: rgba(22, 119, 255, 0.1);
+  }
+
+  &.green {
+    background: rgba(0, 180, 42, 0.1);
+  }
+
+  &.orange {
+    background: rgba(255, 125, 0, 0.1);
+  }
+
+  &.purple {
+    background: rgba(114, 46, 209, 0.1);
+  }
+
+  &.gray {
+    background: $color-bg-page;
+  }
+}
+
+.menuContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.menuText {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  display: block;
+}
+
+.menuDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+  display: block;
+}
+
+.menuArrow {
+  font-size: $font-size-lg;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+  margin-left: $spacing-md;
+}
+
+.versionInfo {
+  text-align: center;
+  padding-top: $spacing-xl;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

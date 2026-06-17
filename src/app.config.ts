@@ -13,7 +13,9 @@ export default defineAppConfig({
     'pages/help-center/index',
     'pages/about-us/index',
     'pages/help-faq-detail/index',
-    'pages/help-guide-detail/index'
+    'pages/help-guide-detail/index',
+    'pages/settings/index',
+    'pages/profile-edit/index'
   ],
   window: {
     backgroundTextStyle: 'light',

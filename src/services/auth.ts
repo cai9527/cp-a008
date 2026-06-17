@@ -130,4 +130,31 @@ export const authService = {
     await new Promise((resolve) => setTimeout(resolve, 300));
     return mockUserInfo;
   },
+
+  updateProfile: async (data: Partial<UserInfo>): Promise<UserInfo> => {
+    console.log('[AuthService] Update profile:', data);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+
+    if (data.name !== undefined) {
+      if (!data.name.trim()) {
+        throw new Error('请输入姓名');
+      }
+      if (data.name.trim().length < 2) {
+        throw new Error('姓名至少需要2个字符');
+      }
+    }
+
+    if (data.phone !== undefined) {
+      if (!data.phone.trim()) {
+        throw new Error('请输入手机号码');
+      }
+      if (!/^1[3-9]\d{9}$/.test(data.phone)) {
+        throw new Error('请输入正确的手机号码');
+      }
+    }
+
+    Object.assign(mockUserInfo, data);
+    console.log('[AuthService] Profile updated successfully');
+    return mockUserInfo;
+  },
 };
