@@ -61,8 +61,8 @@ export const checkinService = {
         status: 'success',
         time: '08:55:30',
         location: {
-          latitude: 39.9042,
-          longitude: 116.4074,
+          latitude: 39.904200,
+          longitude: 116.407400,
           address: '北京市朝阳区建国路88号SOHO现代城',
           accuracy: 12,
           wifiName: 'Company-WiFi',

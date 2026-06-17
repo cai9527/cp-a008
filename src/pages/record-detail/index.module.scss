@@ -247,16 +247,54 @@
   line-height: 1.6;
 }
 
-.coordinateRow {
-  display: flex;
-  gap: $spacing-lg;
-  margin-top: $spacing-sm;
+.coordinateBox {
+  background: rgba(24, 144, 255, 0.05);
+  border: 2rpx solid rgba(24, 144, 255, 0.15);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-top: $spacing-md;
 }
 
-.coordinateItem {
+.coordinateItemFull {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: $spacing-sm;
+  gap: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.coordinateLabel {
   font-size: $font-size-xs;
   color: $color-text-tertiary;
-  font-family: monospace;
+  font-weight: $font-weight-medium;
+  flex-shrink: 0;
+  min-width: 80rpx;
+}
+
+.coordinateValue {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-family: 'Courier New', 'Consolas', monospace;
+  white-space: nowrap;
+  overflow: visible;
+  word-break: keep-all;
+  letter-spacing: 0.5rpx;
+  font-weight: $font-weight-semibold;
+  flex: 1;
+}
+
+.coordinateValueSmall {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  font-family: 'Courier New', 'Consolas', monospace;
+  white-space: nowrap;
+  overflow: visible;
+  word-break: keep-all;
+  flex: 1;
 }
 
 .verifyTags {

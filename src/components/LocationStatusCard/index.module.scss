@@ -7,7 +7,7 @@
   margin-bottom: $spacing-lg;
   box-shadow: $shadow-card;
   border: 2rpx solid transparent;
-  transition: all $transition-normal;
+  transition: all $transition-base;
 }
 
 .cardLocating {
@@ -300,16 +300,96 @@
 }
 
 .coordBox {
-  padding: $spacing-sm $spacing-md;
+  padding: $spacing-md;
   background: $color-bg-page;
   border-radius: $radius-sm;
-  display: inline-block;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: $spacing-sm;
+  overflow: visible;
 }
 
-.coordText {
+.coordRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-bottom: $spacing-xs;
+  overflow: visible;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.coordItem {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: $spacing-xs;
+  overflow: visible;
+}
+
+.coordDivider {
+  width: 2rpx;
+  height: 36rpx;
+  background: $color-divider;
+  margin: 0 $spacing-sm;
+  flex-shrink: 0;
+}
+
+.coordLabel {
   font-size: $font-size-xs;
   color: $color-text-tertiary;
-  font-family: 'Courier New', monospace;
+  flex-shrink: 0;
+  font-weight: $font-weight-medium;
+}
+
+.coordValue {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-family: 'Courier New', 'Consolas', monospace;
+  white-space: nowrap;
+  overflow: visible;
+  word-break: keep-all;
+  letter-spacing: 0.5rpx;
+  font-weight: $font-weight-medium;
+  flex-shrink: 0;
+  text-overflow: clip;
+}
+
+.coordDecimalLabel,
+.coordDmsLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+  min-width: 120rpx;
+}
+
+.coordDecimalValue {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  font-family: 'Courier New', 'Consolas', monospace;
+  white-space: nowrap;
+  overflow: visible;
+  word-break: keep-all;
+  flex: 1 1 auto;
+  text-overflow: clip;
+  min-width: 0;
+}
+
+.coordDmsValue {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  font-family: 'Courier New', 'Consolas', monospace;
+  white-space: nowrap;
+  overflow: visible;
+  word-break: keep-all;
+  flex: 1 1 auto;
+  text-overflow: clip;
+  min-width: 0;
 }
 
 .errorText {

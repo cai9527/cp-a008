@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import styles from './index.module.scss';
 import type { LocationStatus } from '@/hooks/useLocation';
 import type { LocationInfo } from '@/types/checkin';
+import { formatCoordinates } from '@/utils/coordinate';
 
 interface LocationStatusCardProps {
   status: LocationStatus;
@@ -53,49 +54,77 @@ const LocationStatusCard: React.FC<LocationStatusCardProps> = ({
     </View>
   );
 
-  const renderSuccess = () => (
-    <View className={styles.statusSuccess}>
-      <View className={styles.iconBoxSuccess}>
-        <Text className={styles.iconSuccess}>✅</Text>
-      </View>
-      <View className={styles.statusContent}>
-        <Text className={styles.statusTitle}>定位成功</Text>
-        <Text className={styles.locationAddress}>{location?.address}</Text>
-        <View className={styles.locationMeta}>
-          <View className={styles.metaItem}>
-            <Text className={styles.metaLabel}>精度</Text>
-            <Text
-              className={classnames(
-                styles.metaValue,
-                location && location.accuracy <= 20 ? styles.accuracyGood : styles.accuracyFair
-              )}
-            >
-              {location?.accuracy}米
-            </Text>
-          </View>
-          {location?.wifiName && (
+  const renderSuccess = () => {
+    const coords = location
+      ? formatCoordinates(location.latitude, location.longitude, {
+          showDirection: true,
+        })
+      : null;
+
+    return (
+      <View className={styles.statusSuccess}>
+        <View className={styles.iconBoxSuccess}>
+          <Text className={styles.iconSuccess}>✅</Text>
+        </View>
+        <View className={styles.statusContent}>
+          <Text className={styles.statusTitle}>定位成功</Text>
+          <Text className={styles.locationAddress}>{location?.address}</Text>
+          <View className={styles.locationMeta}>
             <View className={styles.metaItem}>
-              <Text className={styles.metaLabel}>WiFi</Text>
-              <Text className={styles.metaValue}>{location.wifiName}</Text>
+              <Text className={styles.metaLabel}>精度</Text>
+              <Text
+                className={classnames(
+                  styles.metaValue,
+                  location && location.accuracy <= 20 ? styles.accuracyGood : styles.accuracyFair
+                )}
+              >
+                {location?.accuracy}米
+              </Text>
             </View>
-          )}
-          {timestamp && (
-            <View className={styles.metaItem}>
-              <Text className={styles.metaLabel}>更新</Text>
-              <Text className={styles.metaValue}>{formatTime(timestamp)}</Text>
+            {location?.wifiName && (
+              <View className={styles.metaItem}>
+                <Text className={styles.metaLabel}>WiFi</Text>
+                <Text className={styles.metaValue}>{location.wifiName}</Text>
+              </View>
+            )}
+            {timestamp && (
+              <View className={styles.metaItem}>
+                <Text className={styles.metaLabel}>更新</Text>
+                <Text className={styles.metaValue}>{formatTime(timestamp)}</Text>
+              </View>
+            )}
+          </View>
+          {coords && (
+            <View className={styles.coordBox}>
+              <View className={styles.coordRow}>
+                <View className={styles.coordItem}>
+                  <Text className={styles.coordLabel}>纬度</Text>
+                  <Text className={styles.coordValue}>{coords.lat}</Text>
+                </View>
+                <View className={styles.coordDivider} />
+                <View className={styles.coordItem}>
+                  <Text className={styles.coordLabel}>经度</Text>
+                  <Text className={styles.coordValue}>{coords.lng}</Text>
+                </View>
+              </View>
+              <View className={styles.coordRow}>
+                <Text className={styles.coordDecimalLabel}>十进制坐标</Text>
+                <Text className={styles.coordDecimalValue}>
+                  {coords.latDecimal}, {coords.lngDecimal}
+                </Text>
+              </View>
+              <View className={styles.coordRow}>
+                <Text className={styles.coordDmsLabel}>度分秒坐标</Text>
+                <Text className={styles.coordDmsValue}>
+                  {coords.latDms}  {coords.lngDms}
+                </Text>
+              </View>
             </View>
           )}
         </View>
-        {location && (
-          <View className={styles.coordBox}>
-            <Text className={styles.coordText}>
-              经度: {location.longitude.toFixed(6)}  |  纬度: {location.latitude.toFixed(6)}
-            </Text>
-          </View>
-        )}
       </View>
-    </View>
-  );
+    );
+  };
 
   const renderError = () => (
     <View className={styles.statusError}>

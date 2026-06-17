@@ -8,6 +8,7 @@ import { checkinService } from '@/services/checkin';
 import { useCheckinStore } from '@/store/useCheckinStore';
 import type { CheckinRecord } from '@/types/checkin';
 import NavBar from '@/components/NavBar';
+import { formatCoordinates } from '@/utils/coordinate';
 
 const statusTextMap: Record<string, string> = {
   success: '正常',
@@ -57,8 +58,8 @@ const RecordDetailPage: React.FC = () => {
           status: 'success',
           time: '08:55:30',
           location: {
-            latitude: 39.9042,
-            longitude: 116.4074,
+            latitude: 39.904200,
+            longitude: 116.407400,
             address: '北京市朝阳区建国路88号SOHO现代城A座',
             accuracy: 12,
             wifiName: 'Company-WiFi',
@@ -139,6 +140,10 @@ const RecordDetailPage: React.FC = () => {
     ? calculateTimeDiff(record.time, standardTime)
     : 0;
 
+  const coords = formatCoordinates(record.location.latitude, record.location.longitude, {
+    showDirection: true,
+  });
+
   return (
     <View className={styles.page}>
       <NavBar title="打卡详情" />
@@ -171,14 +176,30 @@ const RecordDetailPage: React.FC = () => {
                 <Text>精度：{record.location.accuracy.toFixed(0)}米</Text>
               </View>
             </View>
-            <View className={styles.coordinateRow}>
-              <Text className={styles.coordinateItem}>
-                纬度：{record.location.latitude.toFixed(6)}
-              </Text>
-              <Text className={styles.coordinateItem}>
-                经度：{record.location.longitude.toFixed(6)}
-              </Text>
+
+            <View className={styles.coordinateBox}>
+              <View className={styles.coordinateItemFull}>
+                <Text className={styles.coordinateLabel}>纬度</Text>
+                <Text className={styles.coordinateValue}>{coords.lat}</Text>
+              </View>
+              <View className={styles.coordinateItemFull}>
+                <Text className={styles.coordinateLabel}>经度</Text>
+                <Text className={styles.coordinateValue}>{coords.lng}</Text>
+              </View>
+              <View className={styles.coordinateItemFull}>
+                <Text className={styles.coordinateLabel}>十进制</Text>
+                <Text className={styles.coordinateValueSmall}>
+                  {coords.latDecimal}, {coords.lngDecimal}
+                </Text>
+              </View>
+              <View className={styles.coordinateItemFull}>
+                <Text className={styles.coordinateLabel}>度分秒</Text>
+                <Text className={styles.coordinateValueSmall}>
+                  {coords.latDms} {coords.lngDms}
+                </Text>
+              </View>
             </View>
+
             {record.location.wifiName && (
               <View className={styles.wifiInfo}>
                 <Text className={styles.wifiIcon}>📶</Text>
