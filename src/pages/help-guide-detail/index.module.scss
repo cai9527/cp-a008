@@ -1,0 +1,473 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e8f3ff 0%, $color-bg-page 100%);
+}
+
+.pageContainer {
+  padding: 0 $page-padding;
+  padding-bottom: 40rpx;
+}
+
+.cover {
+  position: relative;
+  height: 320rpx;
+  margin: 0 -$page-padding;
+  margin-bottom: $spacing-lg;
+
+  image {
+    width: 100%;
+    height: 100%;
+  }
+
+  overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: $spacing-xl $page-padding;
+  }
+
+  title {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    color: $color-text-white;
+    margin-bottom: $spacing-sm;
+    line-height: $line-height-tight;
+  }
+
+  meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  difficulty {
+    display: inline-flex;
+    align-items: center;
+    padding: 4rpx 12rpx;
+    border-radius: $radius-xs;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+
+    &Beginner {
+      background: rgba(0, 180, 42, 0.9);
+      color: $color-text-white;
+    }
+
+    &Intermediate {
+      background: rgba(255, 125, 0, 0.9);
+      color: $color-text-white;
+    }
+
+    &Advanced {
+      background: rgba(114, 46, 209, 0.9);
+      color: $color-text-white;
+    }
+  }
+
+  time {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  updatedAt {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.guideInfo {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+
+  desc {
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+    line-height: $line-height-loose;
+    text-align: justify;
+  }
+
+  infoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1rpx solid $color-divider;
+  }
+
+  infoItem {
+    text-align: center;
+  }
+
+  infoIcon {
+    font-size: 36rpx;
+    margin-bottom: $spacing-xs;
+  }
+
+  infoLabel {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: 4rpx;
+  }
+
+  infoValue {
+    font-size: $font-size-md;
+    color: $color-text-primary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-top: $spacing-xl;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+
+  icon {
+    margin-right: $spacing-sm;
+  }
+}
+
+.stepsSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.stepItem {
+  display: flex;
+  padding: $spacing-lg 0;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  stepNum {
+    width: 56rpx;
+    height: 56rpx;
+    background: $color-primary-gradient;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-text-white;
+    margin-right: $spacing-lg;
+    flex-shrink: 0;
+  }
+
+  content {
+    flex: 1;
+  }
+
+  title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  desc {
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+    line-height: $line-height-loose;
+    margin-bottom: $spacing-md;
+  }
+
+  tips {
+    background: linear-gradient(135deg, #fff7e6 0%, #fff1f0 100%);
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    border-left: 4rpx solid $color-warning;
+
+    tipsTitle {
+      display: flex;
+      align-items: center;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $color-warning;
+      margin-bottom: $spacing-xs;
+
+      icon {
+        margin-right: $spacing-xs;
+      }
+    }
+
+    tipsList {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+    }
+
+    tipsItem {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      line-height: $line-height-normal;
+
+      &::before {
+        content: '•';
+        margin-right: $spacing-xs;
+        color: $color-warning;
+      }
+    }
+  }
+}
+
+.relatedGuides {
+  margin-top: $spacing-lg;
+
+  list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  item {
+    display: flex;
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    box-shadow: $shadow-card;
+    transition: all $transition-base;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  cover {
+    width: 160rpx;
+    height: 120rpx;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    margin-right: $spacing-md;
+    flex-shrink: 0;
+  }
+
+  coverImage {
+    width: 100%;
+    height: 100%;
+  }
+
+  content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    @include text-ellipsis;
+  }
+
+  desc {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    @include text-ellipsis-multi(2);
+    line-height: $line-height-normal;
+    margin-top: $spacing-xs;
+  }
+
+  meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-top: $spacing-sm;
+  }
+
+  difficulty {
+    font-size: $font-size-xs;
+    padding: 2rpx 8rpx;
+    border-radius: $radius-xs;
+
+    &Beginner {
+      background: rgba(0, 180, 42, 0.1);
+      color: $color-success;
+    }
+
+    &Intermediate {
+      background: rgba(255, 125, 0, 0.1);
+      color: $color-warning;
+    }
+
+    &Advanced {
+      background: rgba(114, 46, 209, 0.1);
+      color: $color-purple;
+    }
+  }
+
+  time {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+}
+
+.actionBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: $spacing-lg $page-padding;
+  padding-bottom: calc(env(safe-area-inset-bottom) + #{$spacing-lg});
+  background: $color-bg-card;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+  display: flex;
+  gap: $spacing-md;
+
+  btn {
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    transition: all $transition-base;
+
+    &:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    &Secondary {
+      background: $color-bg-page;
+      color: $color-text-primary;
+    }
+
+    &Primary {
+      background: $color-primary-gradient;
+      color: $color-text-white;
+    }
+
+    icon {
+      margin-right: $spacing-xs;
+    }
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl * 3 $spacing-lg;
+
+  icon {
+    font-size: 120rpx;
+    margin-bottom: $spacing-lg;
+    opacity: 0.5;
+  }
+
+  text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-lg;
+  }
+
+  btn {
+    height: $button-height-md;
+    padding: 0 $spacing-xl;
+    background: $color-primary-gradient;
+    color: $color-text-white;
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    border-radius: $radius-button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.progressSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-md;
+  }
+
+  title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+
+  percent {
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+  }
+
+  track {
+    width: 100%;
+    height: 12rpx;
+    background: $color-bg-page;
+    border-radius: 6rpx;
+    overflow: hidden;
+  }
+
+  fill {
+    height: 100%;
+    background: $color-primary-gradient;
+    border-radius: 6rpx;
+    transition: width $transition-slow;
+  }
+
+  steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-sm;
+  }
+
+  step {
+    width: 24rpx;
+    height: 24rpx;
+    border-radius: 50%;
+    background: $color-bg-page;
+    border: 3rpx solid $color-border;
+    transition: all $transition-base;
+
+    &Active {
+      background: $color-primary;
+      border-color: $color-primary;
+    }
+
+    &Completed {
+      background: $color-success;
+      border-color: $color-success;
+    }
+  }
+}

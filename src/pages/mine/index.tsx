@@ -75,11 +75,11 @@ const MinePage: React.FC = () => {
   };
 
   const handleGoHelp = () => {
-    Taro.showToast({ title: '帮助功能开发中', icon: 'none' });
+    Taro.navigateTo({ url: '/pages/help-center/index' });
   };
 
   const handleGoAbout = () => {
-    Taro.showToast({ title: '关于功能开发中', icon: 'none' });
+    Taro.navigateTo({ url: '/pages/about-us/index' });
   };
 
   const handleChangePassword = () => {
