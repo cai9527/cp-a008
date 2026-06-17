@@ -9,12 +9,24 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useCheckinStore } from '@/store/useCheckinStore';
 import { checkinService } from '@/services/checkin';
 import CheckinButton from '@/components/CheckinButton';
+import LocationStatusCard from '@/components/LocationStatusCard';
 import RecordItem from '@/components/RecordItem';
 import type { CheckinRecord } from '@/types/checkin';
 
 const HomePage: React.FC = () => {
   const { dateStr, timeStr, weekday, now } = useClock();
-  const { location, loading: locationLoading, getLocation, validateLocation } = useLocation();
+  const {
+    status: locationStatus,
+    location,
+    error: locationError,
+    retryCount,
+    timestamp,
+    getLocation,
+    retry,
+    validateLocation,
+    isLocating,
+    isSuccess,
+  } = useLocation();
   const { userInfo, isLoggedIn, hasRehydrated } = useAuthStore();
   const { todayRecords, addRecord, setTodayRecords } = useCheckinStore();
 
@@ -77,13 +89,16 @@ const HomePage: React.FC = () => {
   }, [isLoggedIn, hasRehydrated]);
 
   const handleCheckin = async (type: 'clockIn' | 'clockOut') => {
-    console.log('[HomePage] Handle checkin:', type);
+    console.log('[HomePage] Handle checkin:', type, 'locationStatus:', locationStatus);
 
-    if (locationLoading) return;
+    if (isLocating) {
+      Taro.showToast({ title: '正在定位中，请稍候...', icon: 'none' });
+      return;
+    }
 
-    if (!location) {
+    if (!isSuccess || !location) {
       Taro.showToast({ title: '正在获取位置...', icon: 'none' });
-      const loc = await getLocation();
+      const loc = await getLocation(true);
       if (!loc) {
         Taro.showToast({ title: '获取位置失败，请重试', icon: 'none' });
         return;
@@ -95,7 +110,13 @@ const HomePage: React.FC = () => {
       Taro.showModal({
         title: '打卡提醒',
         content: validation.reason || '当前位置不满足打卡要求',
-        showCancel: false,
+        confirmText: '重新定位',
+        cancelText: '取消',
+        success: (res) => {
+          if (res.confirm) {
+            getLocation(true);
+          }
+        },
       });
       return;
     }
@@ -156,6 +177,10 @@ const HomePage: React.FC = () => {
     Taro.navigateTo({
       url: `/pages/record-detail/index?id=${record.id}`,
     });
+  };
+
+  const handleRefreshLocation = () => {
+    getLocation(true);
   };
 
   const getGreeting = () => {
@@ -230,26 +255,15 @@ const HomePage: React.FC = () => {
           )}
         </View>
 
-        <View className={styles.locationCard}>
-          <View className={styles.locationRow}>
-            <View className={styles.locationIcon}>📍</View>
-            <View className={styles.locationContent}>
-              <Text className={styles.locationLabel}>当前位置</Text>
-              <Text className={styles.locationValue}>
-                {location?.address || '定位中...'}
-              </Text>
-            </View>
-          </View>
-          <View className={styles.locationRow}>
-            <View className={styles.locationIcon}>📶</View>
-            <View className={styles.locationContent}>
-              <Text className={styles.locationLabel}>WiFi 验证</Text>
-              <Text className={styles.locationValue}>
-                {location?.wifiName || '未连接公司WiFi'}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <LocationStatusCard
+          status={locationStatus}
+          location={location}
+          error={locationError}
+          retryCount={retryCount}
+          timestamp={timestamp}
+          onRefresh={handleRefreshLocation}
+          onRetry={retry}
+        />
 
         <View className={styles.quickActions}>
           <Text className={styles.sectionTitle}>快捷功能</Text>

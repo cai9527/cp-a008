@@ -100,54 +100,6 @@
   }
 }
 
-.locationCard {
-  background: $color-bg-card;
-  border-radius: $radius-lg;
-  padding: $spacing-lg;
-  margin-bottom: $spacing-lg;
-  box-shadow: $shadow-card;
-}
-
-.locationRow {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: $spacing-md;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.locationIcon {
-  width: 40rpx;
-  height: 40rpx;
-  border-radius: $radius-sm;
-  background: $color-bg-tag;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: $spacing-md;
-  flex-shrink: 0;
-  font-size: $font-size-sm;
-}
-
-.locationContent {
-  flex: 1;
-  min-width: 0;
-}
-
-.locationLabel {
-  font-size: $font-size-xs;
-  color: $color-text-tertiary;
-  margin-bottom: $spacing-xs;
-}
-
-.locationValue {
-  font-size: $font-size-sm;
-  color: $color-text-primary;
-  @include text-ellipsis;
-}
-
 .quickActions {
   margin-bottom: $spacing-lg;
 }

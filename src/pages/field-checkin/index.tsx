@@ -7,9 +7,22 @@ import { useLocation } from '@/hooks/useLocation';
 import { useCheckinStore } from '@/store/useCheckinStore';
 import { checkinService } from '@/services/checkin';
 import NavBar from '@/components/NavBar';
+import LocationStatusCard from '@/components/LocationStatusCard';
 
 const FieldCheckinPage: React.FC = () => {
-  const { location, loading: locationLoading, getLocation } = useLocation();
+  const {
+    status: locationStatus,
+    location,
+    error: locationError,
+    retryCount,
+    timestamp,
+    getLocation,
+    retry,
+    validateLocation,
+    isLocating,
+    isSuccess,
+  } = useLocation();
+
   const { addRecord } = useCheckinStore();
 
   const [remark, setRemark] = useState('');
@@ -27,7 +40,7 @@ const FieldCheckinPage: React.FC = () => {
   });
 
   const handleRefreshLocation = () => {
-    getLocation();
+    getLocation(true);
   };
 
   const handleChooseImage = async () => {
@@ -54,11 +67,31 @@ const FieldCheckinPage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    console.log('[FieldCheckin] Handle submit');
+    console.log('[FieldCheckin] Handle submit, locationStatus:', locationStatus);
 
-    if (!location) {
-      Taro.showToast({ title: '正在获取位置信息...', icon: 'none' });
-      await getLocation();
+    if (!isSuccess || !location) {
+      if (isLocating) {
+        Taro.showToast({ title: '正在获取位置信息，请稍候...', icon: 'none' });
+        return;
+      }
+      Taro.showToast({ title: '请先完成定位后再提交', icon: 'none' });
+      await getLocation(true);
+      return;
+    }
+
+    const validation = validateLocation(location);
+    if (!validation.valid) {
+      Taro.showModal({
+        title: '位置验证失败',
+        content: validation.reason || '当前位置不符合打卡要求',
+        confirmText: '重新定位',
+        cancelText: '取消',
+        success: (res) => {
+          if (res.confirm) {
+            getLocation(true);
+          }
+        },
+      });
       return;
     }
 
@@ -106,7 +139,7 @@ const FieldCheckinPage: React.FC = () => {
     }
   };
 
-  const canSubmit = location && remark.trim().length >= 5;
+  const canSubmit = isSuccess && location && remark.trim().length >= 5 && !submitting;
 
   return (
     <View className={styles.page}>
@@ -119,32 +152,15 @@ const FieldCheckinPage: React.FC = () => {
           </Text>
         </View>
 
-        <View className={styles.locationCard}>
-          <Text className={styles.locationTitle}>当前位置</Text>
-          <View className={styles.locationInfo}>
-            <View className={styles.locationIcon}>📍</View>
-            <View className={styles.locationText}>
-              <Text className={styles.locationAddress}>
-                {locationLoading ? '定位中...' : location?.address || '获取位置失败'}
-              </Text>
-              {location && (
-                <>
-                  <Text className={styles.locationDetail}>
-                    精度：{location.accuracy.toFixed(0)}米
-                  </Text>
-                  {location.wifiName && (
-                    <Text className={styles.locationDetail}>
-                      WiFi：{location.wifiName}
-                    </Text>
-                  )}
-                </>
-              )}
-            </View>
-            <View className={styles.refreshBtn} onClick={handleRefreshLocation}>
-              刷新
-            </View>
-          </View>
-        </View>
+        <LocationStatusCard
+          status={locationStatus}
+          location={location}
+          error={locationError}
+          retryCount={retryCount}
+          timestamp={timestamp}
+          onRefresh={handleRefreshLocation}
+          onRetry={retry}
+        />
 
         <View className={styles.formCard}>
           <View className={styles.formItem}>
@@ -186,10 +202,10 @@ const FieldCheckinPage: React.FC = () => {
 
       <View className={styles.submitBar}>
         <View
-          className={classnames(styles.submitBtn, (!canSubmit || submitting) && styles.disabled)}
-          onClick={canSubmit && !submitting ? handleSubmit : undefined}
+          className={classnames(styles.submitBtn, !canSubmit && styles.disabled)}
+          onClick={canSubmit ? handleSubmit : undefined}
         >
-          {submitting ? '提交中...' : '提交外勤打卡'}
+          {submitting ? '提交中...' : isLocating ? '定位中...' : '提交外勤打卡'}
         </View>
       </View>
 
