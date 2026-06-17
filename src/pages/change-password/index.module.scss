@@ -1,0 +1,259 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 200rpx;
+}
+
+.tipCard {
+  display: flex;
+  background: linear-gradient(135deg, rgba(22, 119, 255, 0.08) 0%, rgba(64, 150, 255, 0.08) 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  border: 2rpx solid rgba(22, 119, 255, 0.15);
+}
+
+.tipIcon {
+  font-size: 48rpx;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.tipContent {
+  flex: 1;
+}
+
+.tipTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.tipText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.tipList {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.tipListItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  line-height: 1.6;
+}
+
+.formCard {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl $spacing-xl $spacing-sm;
+  box-shadow: $shadow-card;
+}
+
+.formItem {
+  margin-bottom: $spacing-lg;
+}
+
+.formLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.formLabelRequired {
+  &::before {
+    content: '*';
+    color: $color-error;
+    margin-right: 4rpx;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-lg;
+  border: 2rpx solid transparent;
+  transition: all $transition-fast;
+
+  &.focused {
+    border-color: $color-primary;
+    background: $color-bg-card;
+  }
+
+  &.error {
+    border-color: $color-error;
+    background: rgba(245, 63, 63, 0.04);
+  }
+}
+
+.inputIcon {
+  font-size: $font-size-lg;
+  margin-right: $spacing-md;
+  color: $color-text-tertiary;
+}
+
+.input {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: 1.5;
+}
+
+.toggleIcon {
+  font-size: $font-size-lg;
+  margin-left: $spacing-md;
+  padding: $spacing-xs;
+}
+
+.strengthBar {
+  margin-top: $spacing-sm;
+}
+
+.strengthLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.strengthLabelText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.strengthValue {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+
+  &.weak {
+    color: $color-error;
+  }
+
+  &.medium {
+    color: $color-warning;
+  }
+
+  &.strong {
+    color: $color-success;
+  }
+}
+
+.strengthTrack {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.strengthFill {
+  flex: 1;
+  height: 8rpx;
+  background: $color-border;
+  border-radius: $radius-round;
+  transition: all $transition-fast;
+
+  &.weak {
+    background: $color-error;
+  }
+
+  &.medium {
+    background: $color-warning;
+  }
+
+  &.strong {
+    background: $color-success;
+  }
+}
+
+.errorText {
+  display: block;
+  font-size: $font-size-xs;
+  color: $color-error;
+  margin-top: $spacing-xs;
+  line-height: 1.4;
+}
+
+.submitBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding;
+  padding-bottom: calc(#{$spacing-lg} + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.submitBtn {
+  @include button-reset;
+  width: 100%;
+  height: $button-height-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  transition: all $transition-fast;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &.disabled {
+    background: $color-text-disabled;
+  }
+}
+
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loadingContent {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xxl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 240rpx;
+}
+
+.spinner {
+  width: 64rpx;
+  height: 64rpx;
+  border: 6rpx solid $color-border;
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: $spacing-md;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}

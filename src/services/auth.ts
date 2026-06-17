@@ -56,14 +56,61 @@ export const authService = {
 
   updatePassword: async (oldPassword: string, newPassword: string): Promise<void> => {
     console.log('[AuthService] Update password');
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 600));
 
-    if (!oldPassword || !newPassword) {
-      throw new Error('请输入完整的密码信息');
+    if (!oldPassword) {
+      throw new Error('请输入当前密码');
     }
-    if (newPassword.length < 6) {
-      throw new Error('新密码长度不能少于6位');
+    if (oldPassword.length < 6) {
+      throw new Error('当前密码长度不能少于6位');
     }
+    if (!newPassword) {
+      throw new Error('请输入新密码');
+    }
+    if (newPassword.length < 8) {
+      throw new Error('新密码长度不能少于8位');
+    }
+    if (newPassword.length > 20) {
+      throw new Error('新密码长度不能超过20位');
+    }
+    if (/\s/.test(newPassword)) {
+      throw new Error('新密码不能包含空格');
+    }
+    if (!/[a-zA-Z]/.test(newPassword)) {
+      throw new Error('新密码必须包含字母');
+    }
+    if (!/\d/.test(newPassword)) {
+      throw new Error('新密码必须包含数字');
+    }
+    if (newPassword === oldPassword) {
+      throw new Error('新密码不能与当前密码相同');
+    }
+
+    let similarityCount = 0;
+    for (let i = 0; i < oldPassword.length && i < newPassword.length; i++) {
+      if (oldPassword[i] === newPassword[i]) {
+        similarityCount++;
+      }
+    }
+    const similarityThreshold = Math.min(oldPassword.length, newPassword.length) * 0.6;
+    if (similarityCount > similarityThreshold) {
+      throw new Error('新密码与当前密码过于相似，请重新设置');
+    }
+
+    const commonWeakPasswords = [
+      '12345678', '87654321', 'password', 'qwerty123',
+      '11111111', '00000000', 'abc12345', '1234abcd'
+    ];
+    if (commonWeakPasswords.includes(newPassword.toLowerCase())) {
+      throw new Error('新密码强度过低，请勿使用常见密码');
+    }
+
+    const MOCK_CURRENT_PASSWORD = '123456';
+    if (oldPassword !== MOCK_CURRENT_PASSWORD) {
+      throw new Error('当前密码不正确，请重新输入');
+    }
+
+    console.log('[AuthService] Password updated successfully');
   },
 
   getUserInfo: async (): Promise<UserInfo> => {

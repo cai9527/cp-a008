@@ -8,7 +8,8 @@ export default defineAppConfig({
     'pages/field-checkin/index',
     'pages/leave-apply/index',
     'pages/leave-records/index',
-    'pages/record-detail/index'
+    'pages/record-detail/index',
+    'pages/change-password/index'
   ],
   window: {
     backgroundTextStyle: 'light',

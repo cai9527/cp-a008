@@ -83,7 +83,7 @@ const MinePage: React.FC = () => {
   };
 
   const handleChangePassword = () => {
-    Taro.showToast({ title: '修改密码功能开发中', icon: 'none' });
+    Taro.navigateTo({ url: '/pages/change-password/index' });
   };
 
   const menuItems = [
