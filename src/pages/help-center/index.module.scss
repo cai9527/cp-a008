@@ -92,7 +92,10 @@
 }
 
 .categoryScroll {
+  position: relative;
+  z-index: 2;
   margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-sm;
   white-space: nowrap;
 }
 

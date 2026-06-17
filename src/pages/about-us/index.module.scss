@@ -184,16 +184,22 @@
     padding: $spacing-md;
     display: flex;
     align-items: center;
+    min-height: 100rpx;
+    transition: all $transition-base;
+
+    &:active {
+      transform: scale(0.98);
+    }
 
     icon {
-      width: 56rpx;
-      height: 56rpx;
+      width: 64rpx;
+      height: 64rpx;
       background: $color-primary-gradient;
       border-radius: $radius-sm;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28rpx;
+      font-size: 32rpx;
       margin-right: $spacing-md;
       flex-shrink: 0;
     }
@@ -201,11 +207,15 @@
     content {
       flex: 1;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     label {
       font-size: $font-size-xs;
       color: $color-text-tertiary;
+      line-height: 1.4;
     }
 
     value {
@@ -213,8 +223,23 @@
       font-size: $font-size-sm;
       color: $color-text-primary;
       font-weight: $font-weight-medium;
-      margin-top: 2rpx;
+      margin-top: 4rpx;
+      line-height: 1.4;
       @include text-ellipsis;
+    }
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: 1fr;
+
+    infoItem {
+      min-height: 88rpx;
+
+      icon {
+        width: 56rpx;
+        height: 56rpx;
+        font-size: 28rpx;
+      }
     }
   }
 }
@@ -239,18 +264,20 @@
   }
 
   avatar {
-    width: 120rpx;
-    height: 120rpx;
+    width: 128rpx;
+    height: 128rpx;
     border-radius: $radius-round;
     overflow: hidden;
     margin-right: $spacing-lg;
     flex-shrink: 0;
     border: 4rpx solid $color-bg-tag;
+    align-self: flex-start;
   }
 
   avatarImage {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 
   avatarPlaceholder {
@@ -268,24 +295,30 @@
   content {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   name {
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
     color: $color-text-primary;
+    line-height: 1.4;
   }
 
   position {
     font-size: $font-size-sm;
     color: $color-primary;
-    margin-top: 4rpx;
+    margin-top: $spacing-xs;
+    line-height: 1.4;
   }
 
   department {
     font-size: $font-size-xs;
     color: $color-text-tertiary;
     margin-top: 2rpx;
+    line-height: 1.4;
   }
 
   bio {
@@ -309,6 +342,21 @@
       background: $color-bg-tag;
       padding: 4rpx 12rpx;
       border-radius: $radius-xs;
+      line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 375px) {
+    padding: $spacing-md;
+
+    avatar {
+      width: 96rpx;
+      height: 96rpx;
+      margin-right: $spacing-md;
+    }
+
+    avatarPlaceholder {
+      font-size: 36rpx;
     }
   }
 }
@@ -401,13 +449,14 @@
 .cultureItem {
   background: $color-bg-card;
   border-radius: $radius-lg;
-  padding: $spacing-lg;
+  padding: $spacing-lg $spacing-md;
   box-shadow: $shadow-card;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: all $transition-base;
+  min-height: 240rpx;
 
   &:active {
     transform: translateY(-4rpx);
@@ -415,15 +464,16 @@
   }
 
   icon {
-    width: 80rpx;
-    height: 80rpx;
+    width: 88rpx;
+    height: 88rpx;
     background: $color-primary-gradient;
     border-radius: $radius-lg;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40rpx;
+    font-size: 44rpx;
     margin-bottom: $spacing-md;
+    flex-shrink: 0;
   }
 
   title {
@@ -431,6 +481,7 @@
     font-weight: $font-weight-semibold;
     color: $color-text-primary;
     margin-bottom: $spacing-xs;
+    line-height: 1.4;
   }
 
   desc {
@@ -438,11 +489,31 @@
     color: $color-text-secondary;
     line-height: $line-height-normal;
   }
+
+  @media (max-width: 375px) {
+    padding: $spacing-md $spacing-sm;
+    min-height: 220rpx;
+
+    icon {
+      width: 72rpx;
+      height: 72rpx;
+      font-size: 36rpx;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .cultureGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .partnerScroll {
+  position: relative;
+  z-index: 2;
   margin: 0 -$page-padding;
   padding: 0 $page-padding;
+  padding-bottom: $spacing-sm;
   white-space: nowrap;
 }
 
@@ -450,24 +521,35 @@
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  width: 200rpx;
+  width: 220rpx;
   background: $color-bg-card;
   border-radius: $radius-md;
-  padding: $spacing-md;
+  padding: $spacing-md $spacing-sm;
   margin-right: $spacing-md;
   box-shadow: $shadow-card;
+  vertical-align: top;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+  }
 
   logo {
-    width: 100rpx;
-    height: 100rpx;
+    width: 112rpx;
+    height: 112rpx;
     border-radius: $radius-md;
     overflow: hidden;
-    margin-bottom: $spacing-sm;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-bg-page;
   }
 
   logoImage {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 
   name {
@@ -477,12 +559,26 @@
     @include text-ellipsis;
     width: 100%;
     text-align: center;
+    line-height: 1.4;
   }
 
   industry {
     font-size: $font-size-xs;
     color: $color-text-tertiary;
-    margin-top: 2rpx;
+    margin-top: 4rpx;
+    line-height: 1.4;
+    text-align: center;
+    width: 100%;
+  }
+
+  @media (max-width: 375px) {
+    width: 180rpx;
+    padding: $spacing-sm;
+
+    logo {
+      width: 96rpx;
+      height: 96rpx;
+    }
   }
 }
 
@@ -494,9 +590,18 @@
 
   contactItem {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding: $spacing-md 0;
     border-bottom: 1rpx solid $color-divider;
+    min-height: 96rpx;
+    transition: all $transition-base;
+
+    &:active {
+      background: $color-bg-page;
+      margin: 0 (-$spacing-md);
+      padding: $spacing-md $spacing-md;
+      border-radius: $radius-md;
+    }
 
     &:last-child {
       border-bottom: none;
@@ -504,25 +609,30 @@
   }
 
   icon {
-    width: 64rpx;
-    height: 64rpx;
+    width: 72rpx;
+    height: 72rpx;
     background: $color-primary-gradient;
     border-radius: $radius-md;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32rpx;
+    font-size: 36rpx;
     margin-right: $spacing-md;
     flex-shrink: 0;
   }
 
   content {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   label {
     font-size: $font-size-sm;
     color: $color-text-tertiary;
+    line-height: 1.4;
   }
 
   value {
@@ -531,6 +641,24 @@
     color: $color-text-primary;
     font-weight: $font-weight-medium;
     margin-top: 4rpx;
+    line-height: 1.4;
+    @include text-ellipsis;
+  }
+
+  @media (max-width: 375px) {
+    padding: $spacing-md;
+
+    icon {
+      width: 60rpx;
+      height: 60rpx;
+      font-size: 30rpx;
+      margin-right: $spacing-sm;
+    }
+
+    contactItem {
+      padding: $spacing-sm 0;
+      min-height: 80rpx;
+    }
   }
 }
 
@@ -608,13 +736,15 @@
   padding: $page-padding;
 
   content {
+    position: relative;
     width: 100%;
-    max-width: 600rpx;
+    max-width: 640rpx;
     background: $color-bg-card;
     border-radius: $radius-lg;
     padding: $spacing-xl;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
+    box-sizing: border-box;
   }
 
   closeBtn {
@@ -628,6 +758,7 @@
     justify-content: center;
     font-size: 32rpx;
     color: $color-text-tertiary;
+    z-index: 1;
   }
 
   header {
@@ -636,41 +767,52 @@
     margin-bottom: $spacing-lg;
     padding-bottom: $spacing-lg;
     border-bottom: 1rpx solid $color-divider;
+    padding-right: 48rpx;
   }
 
   avatar {
-    width: 120rpx;
-    height: 120rpx;
+    width: 128rpx;
+    height: 128rpx;
     border-radius: $radius-round;
     overflow: hidden;
     margin-right: $spacing-lg;
+    flex-shrink: 0;
+    border: 4rpx solid $color-bg-tag;
   }
 
   avatarImage {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 
   info {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   name {
     font-size: $font-size-xl;
     font-weight: $font-weight-bold;
     color: $color-text-primary;
+    line-height: 1.4;
   }
 
   position {
     font-size: $font-size-md;
     color: $color-primary;
-    margin-top: 4rpx;
+    margin-top: $spacing-xs;
+    line-height: 1.4;
   }
 
   department {
     font-size: $font-size-sm;
     color: $color-text-tertiary;
     margin-top: 2rpx;
+    line-height: 1.4;
   }
 
   sectionTitle {
@@ -678,6 +820,7 @@
     font-weight: $font-weight-semibold;
     color: $color-text-primary;
     margin-bottom: $spacing-sm;
+    line-height: 1.4;
   }
 
   bio {
@@ -685,6 +828,7 @@
     color: $color-text-secondary;
     line-height: $line-height-loose;
     margin-bottom: $spacing-lg;
+    text-align: justify;
   }
 
   expertise {
@@ -698,6 +842,24 @@
       background: $color-bg-tag;
       padding: 8rpx 16rpx;
       border-radius: $radius-sm;
+      line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 375px) {
+    content {
+      padding: $spacing-lg;
+      max-height: 90vh;
+    }
+
+    avatar {
+      width: 96rpx;
+      height: 96rpx;
+      margin-right: $spacing-md;
+    }
+
+    name {
+      font-size: $font-size-lg;
     }
   }
 }
